@@ -13,7 +13,10 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -24,10 +27,11 @@ public class DataGenerator {
 
     private static final int ALPHABET_SIZE = 'Z' - 'A';
     private static int NUM_COMPANY = 0;
-    private static int NUM_KISY = 0;
+    private static int NUM_KISY = 10; //TEST
     public static int NUM_SYARYO = 1000000;
     public static int NUM_CUSTOMER = 100000;
     private static DecimalFormat custmerDF = new DecimalFormat("00000");
+    private static DecimalFormat syaryoDF = new DecimalFormat("000000");
     private static DecimalFormat yubinDF = new DecimalFormat("0000000");
     private static DecimalFormat telDF = new DecimalFormat("00000000000");
     private List<String> kisyList = new ArrayList();
@@ -59,8 +63,9 @@ public class DataGenerator {
         kisyList.add("XXXXX");
         kisyList.add(" ");
         kisyList.add("--");
-        NUM_KISY = kisyList.size();
-         System.out.print("機種リスト\n  ");
+        Collections.shuffle(kisyList);
+        kisyList = kisyList.subList(0, NUM_KISY);
+        System.out.print("機種リスト("+kisyList.size()+")\n  ");
         System.out.println(kisyList);
 
         //会社リスト
@@ -143,7 +148,7 @@ public class DataGenerator {
             case "小変形":
                 return syList.get(genLogic(syList.size()-1));
             case "機番":
-                return String.valueOf(genLogic(NUM_SYARYO));
+                return syaryoDF.format(genLogic(NUM_SYARYO));
             case "作番":
                 return randomString(1)+yubinDF.format(genLogic((int) Math.pow(10, length-1)));
         }
@@ -198,9 +203,28 @@ public class DataGenerator {
     }
     
     public String getCompany(int index){
-        return companyList.get(index%companyList.size());
+        return companyList.get(Math.abs(index)%companyList.size());
     }
-
+    
+    public String getType(int kiban){
+        return typeList.get(Math.abs(kiban)%typeList.size());
+    }
+    
+    public String getSyhk(int kiban){
+        return syList.get(Math.abs(kiban)%syList.size());
+    }
+    
+    private Map<String, Integer> map = new HashMap();
+    public String getKiban(String kisy){
+        if(map.get(kisy) == null)
+            map.put(kisy, 0);
+        
+        Integer kiban = map.get(kisy) + 1;
+        map.put(kisy, kiban);
+        
+        return syaryoDF.format(kiban);
+    }
+    
     public static void main(String[] args) {
         DataGenerator idgen = new DataGenerator();
 

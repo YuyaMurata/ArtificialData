@@ -42,7 +42,8 @@ public class SyaryoTable {
 
         try (PrintWriter out = CSVFileReadWrite.writer(syaryoFile)) {
             //Header Name
-            out.println(layout.stream().map(l -> l.split(",")[1]).collect(Collectors.joining(",")));
+            List<String> header = layout.stream().map(l -> l.split(",")[1]).collect(Collectors.toList()); 
+            out.println(String.join(",", header));
             
             //Data Generate
             while (true) {
@@ -51,14 +52,19 @@ public class SyaryoTable {
                     String[] l = field.split(",");
                     csvLine.add(dataGen.getData(l[1], l[3], Integer.valueOf(l[4])));
                 }
+                //型・小変形の規則化 機番から決まるようにする
+                csvLine.set(header.indexOf("型式"), dataGen.getType(csvLine.get(header.indexOf("機番")).hashCode()));
+                csvLine.set(header.indexOf("小変形"), dataGen.getSyhk(csvLine.get(header.indexOf("機番")).hashCode()));
+                //会社コードの規則化 顧客コードから会社コードが決まるようにする
                 //csvLine.set(0, dataGen.getCompany(csvLine.get(13).hashCode()));
                 
-                String key = csvLine.get(1)+csvLine.get(4);
+                String key = csvLine.get(header.indexOf("機種"))+csvLine.get(header.indexOf("機番"));
                 if(indexMap.get(key) == null){
                     indexMap.put(key, "1");
                     out.println(String.join(",", csvLine));
                 }else
                     i--;
+                
                 if (++i > numSyaryo) {
                     System.out.println("Syaryo Table Generate!");
                     break;

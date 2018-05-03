@@ -33,12 +33,14 @@ public class JSONCreator {
 
         syaryo(new File(filepath + "TEST_SYARYO.csv"), syaryoMap);
         customer(new File(filepath + "TEST_CUSTOMER.csv"), syaryoMap);
+        order(new File(filepath + "TEST_Order.csv"), syaryoMap);
         
         SyaryoObjectToJSON json = new SyaryoObjectToJSON();
         json.write(filename, syaryoMap);
         json.pretty(filename);
     }
 
+    //Syaryo Table to JSON
     private void syaryo(File file, Map<String, SyaryoObject> map) {
         try (BufferedReader br = CSVFileReadWrite.reader(file)) {
             String line = br.readLine();
@@ -86,28 +88,29 @@ public class JSONCreator {
         }
     }
 
+    //Customer Table to JSON
     Map<String, List<String>> custMap = new HashMap();
 
     private void customer(File file, Map<String, SyaryoObject> map) {
-        try (PrintWriter pw = CSVFileReadWrite.writer("error_"+file.getName());
+        try (PrintWriter pw = CSVFileReadWrite.writer("error_" + file.getName());
                 BufferedReader br = CSVFileReadWrite.reader(file)) {
             String line = br.readLine();
             List<String> header = Arrays.asList(line.split(","));
             List<Integer> keys = new ArrayList();
             keys.add(header.indexOf("会社コード"));
             keys.add(header.indexOf("顧客コード"));
-            
+
             while ((line = br.readLine()) != null) {
                 String[] data = line.split(",");
                 String cust = keys.stream()
                         .map(key -> data[key])
                         .collect(Collectors.joining("-"));
-                
-                if(custMap.get(cust) == null){
-                    pw.println(cust+":"+line);
+
+                if (custMap.get(cust) == null) {
+                    pw.println(cust + ":" + line);
                     continue;
                 }
-                
+
                 for (String name : custMap.get(cust)) {
                     SyaryoObject syaryo = map.get(name);
                     syaryo.add("顧客", cust, Arrays.asList(line.split(",")));
@@ -117,6 +120,51 @@ public class JSONCreator {
                 }
             }
 
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    //Customer Table to JSON
+    Map<String, String> orderMap = new HashMap();
+    private void order(File file, Map<String, SyaryoObject> map) {
+        try (PrintWriter pw = CSVFileReadWrite.writer("error_" + file.getName());
+                BufferedReader br = CSVFileReadWrite.reader(file)) {
+            String line = br.readLine();
+            List<String> header = Arrays.asList(line.split(","));
+            List<Integer> keys = new ArrayList();
+            keys.add(header.indexOf("機種"));
+            keys.add(header.indexOf("機番"));
+
+            List<Integer> orderKeys = new ArrayList();
+            orderKeys.add(header.indexOf("会社コード"));
+            orderKeys.add(header.indexOf("作番"));
+
+            int subKey = header.indexOf("受注日");
+
+            while ((line = br.readLine()) != null) {
+                String[] data = line.split(",");
+                String name = keys.stream()
+                        .map(key -> data[key])
+                        .collect(Collectors.joining("-"));
+                String sname = SyaryoObject.transName(name);
+
+                String sbnID = orderKeys.stream()
+                        .map(key -> data[key])
+                        .collect(Collectors.joining("-"));
+
+                if (map.get(sname) == null) {
+                    pw.println(name + ":" + sbnID + ":" + line);
+                    continue;
+                }
+
+                SyaryoObject syaryo = map.get(sname);
+                syaryo.add("受注", data[subKey], Arrays.asList(line.split(",")));
+
+                //Register
+                orderMap.put(sbnID, sname);
+                map.put(sname, syaryo);
+            }
         } catch (IOException ex) {
             ex.printStackTrace();
         }

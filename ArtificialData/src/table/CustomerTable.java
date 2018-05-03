@@ -29,12 +29,12 @@ public class CustomerTable {
 
     public CustomerTable() {
     }
-    
+
     public CustomerTable(Integer n) {
         this.numCustomer = n;
         DataGenerator.NUM_CUSTOMER = n;
     }
-    
+
     public void createCustTable(DataGenerator dataGen, String file, List<String> layout) {
         int i = 0;
 
@@ -51,9 +51,8 @@ public class CustomerTable {
                     for (String field : layout) {
                         String[] l = field.split(",");
                         if (l[1].equals("顧客コード")) {
-                            String cid = "C00" + df.format(i++); 
+                            String cid = "C00" + df.format(i++);
                             csvLine.add(cid);
-                            //csvLine.set(0, dataGen.getCompany(cid.hashCode()));
                         } else if (l[1].equals("顧客名称１")) {
                             csvLine.add(h[0]);
                         } else if (l[1].equals("顧客名称２")) {
@@ -66,6 +65,10 @@ public class CustomerTable {
                             csvLine.add(dataGen.getData(l[1], l[3], Integer.valueOf(l[4])));
                         }
                     }
+
+                    //会社コードの規則化 顧客コードから会社コードが決まるようにする
+                    //csvLine.set(0, dataGen.getCompany(csvLine.get(1).hashCode()));
+                    
                     out.println(String.join(",", csvLine));
                     if (i > numCustomer) {
                         System.out.println("Customer Table Generate!");
