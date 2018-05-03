@@ -22,63 +22,62 @@ import java.util.stream.Collectors;
  */
 public class CustomerTable {
 
-    private String cutomerFile = "TEST_CUSTOMER.csv";
-    private Integer numCustomer = 100000;
-    private static DecimalFormat df = new DecimalFormat("00000");
-    private static DecimalFormat dm = new DecimalFormat("00");
+	private String cutomerFile = "TEST_CUSTOMER.csv";
+	private Integer numCustomer = 100000;
+	private static DecimalFormat df = new DecimalFormat("00000");
+	private static DecimalFormat dm = new DecimalFormat("00");
 
-    public CustomerTable() {
-    }
+	public CustomerTable() {
+	}
 
-    public CustomerTable(Integer n) {
-        this.numCustomer = n;
-        DataGenerator.NUM_CUSTOMER = n;
-    }
+	public CustomerTable(Integer n) {
+		this.numCustomer = n;
+		DataGenerator.NUM_CUSTOMER = n;
+	}
 
-    public void createCustTable(DataGenerator dataGen, String file, List<String> layout) {
-        int i = 0;
+	public void createCustTable(DataGenerator dataGen, String file, List<String> layout) {
+		int i = 0;
 
-        try (PrintWriter out = CSVFileReadWrite.writer(cutomerFile)) {
-            //Header Name
-            out.println(layout.stream().map(l -> l.split(",")[1]).collect(Collectors.joining(",")));
-            try (BufferedReader csv = CSVFileReadWrite.reader(new File(file))) {
-                String line = csv.readLine();
+		try (PrintWriter out = CSVFileReadWrite.writer(cutomerFile)) {
+			//Header Name
+			out.println(layout.stream().map(l -> l.split(",")[1]).collect(Collectors.joining(",")));
+			try (BufferedReader csv = CSVFileReadWrite.reader(new File(file))) {
+				String line = csv.readLine();
 
-                //Data Generate
-                while ((line = csv.readLine()) != null) {
-                    String[] h = line.split(",");
-                    List csvLine = new ArrayList();
-                    for (String field : layout) {
-                        String[] l = field.split(",");
-                        if (l[1].equals("顧客コード")) {
-                            String cid = "C00" + df.format(i++);
-                            csvLine.add(cid);
-                        } else if (l[1].equals("顧客名称１")) {
-                            csvLine.add(h[0]);
-                        } else if (l[1].equals("顧客名称２")) {
-                            csvLine.add(h[1]);
-                        } else if (l[1].equals("都道府県名称")) {
-                            csvLine.add(h[5]);
-                        } else if (l[1].contains("年月")) {
-                            csvLine.add(h[4].split("/")[0] + dm.format(Integer.valueOf(h[4].split("/")[1])));
-                        } else {
-                            csvLine.add(dataGen.getData(l[1], l[3], Integer.valueOf(l[4])));
-                        }
-                    }
+				//Data Generate
+				while ((line = csv.readLine()) != null) {
+					String[] h = line.split(",");
+					List csvLine = new ArrayList();
+					for (String field : layout) {
+						String[] l = field.split(",");
+						if (l[1].equals("顧客コード")) {
+							String cid = "C00" + df.format(i++);
+							csvLine.add(cid);
+						} else if (l[1].equals("顧客名称１")) {
+							csvLine.add(h[0]);
+						} else if (l[1].equals("顧客名称２")) {
+							csvLine.add(h[1]);
+						} else if (l[1].equals("都道府県名称")) {
+							csvLine.add(h[5]);
+						} else if (l[1].contains("年月")) {
+							csvLine.add(h[4].split("/")[0] + dm.format(Integer.valueOf(h[4].split("/")[1])));
+						} else {
+							csvLine.add(dataGen.getData(l[1], l[3], Integer.valueOf(l[4])));
+						}
+					}
 
-                    //会社コードの規則化 顧客コードから会社コードが決まるようにする
-                    //csvLine.set(0, dataGen.getCompany(csvLine.get(1).hashCode()));
-                    
-                    out.println(String.join(",", csvLine));
-                    if (i > numCustomer) {
-                        System.out.println("Customer Table Generate!");
-                        break;
-                    }
-                }
-            }
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
+					//会社コードの規則化 顧客コードから会社コードが決まるようにする
+					//csvLine.set(0, dataGen.getCompany(csvLine.get(1).hashCode()));
+					out.println(String.join(",", csvLine));
+					if (i > numCustomer) {
+						System.out.println("Customer Table Generate!");
+						break;
+					}
+				}
+			}
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+	}
 
 }
