@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  */
 public class SyaryoTable {
 
-	private String syaryoFile = "TEST_SYARYO.csv";
+	private String syaryoFile = "test\\TEST_SYARYO.csv";
 	private Integer numSyaryo = 1000000;
 	private static Map indexMap = new HashMap();
 

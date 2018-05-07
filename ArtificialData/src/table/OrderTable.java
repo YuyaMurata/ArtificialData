@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  */
 public class OrderTable {
     
-    private String orderFile = "TEST_ORDER.csv";
+    private String orderFile = "test\\TEST_ORDER.csv";
     private Integer numOrder = 10000000;
     private static Map indexMap = new HashMap();
 

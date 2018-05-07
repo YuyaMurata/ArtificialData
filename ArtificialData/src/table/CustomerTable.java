@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  */
 public class CustomerTable {
 
-	private String cutomerFile = "TEST_CUSTOMER.csv";
+	private String cutomerFile = "test\\TEST_CUSTOMER.csv";
 	private Integer numCustomer = 100000;
 	private static DecimalFormat df = new DecimalFormat("00000");
 	private static DecimalFormat dm = new DecimalFormat("00");

@@ -5,6 +5,7 @@
  */
 package main;
 
+import java.io.File;
 import json.create.JSONCreator;
 
 /**
@@ -14,6 +15,14 @@ import json.create.JSONCreator;
 public class JSONGenerator {
     private static String FILEPATH = "test\\";
     public static void main(String[] args) {
+		File file = new File("json\\");
+		if(!file.exists())
+			file.mkdir();
+		
+		file = new File("error\\");
+		if(!file.exists())
+			file.mkdir();
+		
         JSONCreator json = new JSONCreator();
         json.create(FILEPATH);
     }

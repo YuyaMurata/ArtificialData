@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  * @author kaeru_yuya
  */
 public class GPSTable {
-    private String gpsFile = "TEST_GPS.csv";
+    private String gpsFile = "test\\TEST_GPS.csv";
     private Integer numGPS = 250000000;
     private static String path = "resource\\root\\";
 

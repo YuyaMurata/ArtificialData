@@ -6,6 +6,7 @@
 package main;
 
 import id.DataGenerator;
+import java.io.File;
 import table.CustomerTable;
 import table.GPSTable;
 import table.InfoTable;
@@ -27,9 +28,13 @@ public class TestDataGenerator {
 	public static void main(String[] args) {
 		DataGenerator dataGen = new DataGenerator();
 		InfoTable table = new InfoTable();
+		
+		File file = new File("test\\");
+		if(!file.exists())
+			file.mkdir();
 
 		//システムテスト用 c=100000 s=1000000 機種=1000 o=10000000 w=20000000 p=30000000 sensor=2500000000
-        //小規模テスト(確認済み) c=1000 s=10000 機種=10 o=100000 w=200000 p=300000 sensor=200000
+		//小規模テスト(確認済み) c=1000 s=10000 機種=10 o=100000 w=200000 p=300000 sensor=200000
 		new CustomerTable(1000).createCustTable(dataGen, "resource\\個人情報.csv", table.getLayout(BIS_LAYOUTPATH + "Layout_customer.csv"));
 		new SyaryoTable(10000, 10).createSyaryoTable(dataGen, table.getLayout(BIS_LAYOUTPATH + "Layout_syaryo.csv"));
 		new OrderTable(100000).createOrderTable(dataGen, table.getLayout(BIS_LAYOUTPATH + "Layout_order.csv"), table.syaryoCUST());

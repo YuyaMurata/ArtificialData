@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
  */
 public class SMRTable {
 
-    private String smrFile = "TEST_SMR.csv";
+    private String smrFile = "test\\TEST_SMR.csv";
     private Integer numSMR = 250000000;
     private static String gpsFile = "TEST_GPS.csv";
 

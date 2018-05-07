@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  * @author kaeru_yuya
  */
 public class PartsTable {
-    private String partsFile = "TEST_PARTS.csv";
+    private String partsFile = "test\\TEST_PARTS.csv";
     private Integer numParts = 30000000;
 
     public PartsTable() {

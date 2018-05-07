@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  * @author kaeru_yuya
  */
 public class WorkTable {
-    private String workFile = "TEST_WORK.csv";
+    private String workFile = "test\\TEST_WORK.csv";
     private Integer numWork = 20000000;
 
     public WorkTable() {
