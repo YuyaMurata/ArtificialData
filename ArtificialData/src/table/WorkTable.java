@@ -53,7 +53,7 @@ public class WorkTable {
 				out.println(String.join(",", csvLine));
 
 				if (++i > numWork) {
-					System.out.println("Work Table Generate!");
+					System.out.println("Finished Work Table!");
 					break;
 				}
 			}

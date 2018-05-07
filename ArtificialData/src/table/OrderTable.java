@@ -65,7 +65,7 @@ public class OrderTable {
                 
                 out.println(String.join(",", csvLine));
                 if (++i > numOrder) {
-                    System.out.println("Order Table Generate!");
+                    System.out.println("Finished Order Table!");
                     break;
                 }
             }

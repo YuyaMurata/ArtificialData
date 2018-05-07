@@ -70,7 +70,7 @@ public class CustomerTable {
 					//csvLine.set(0, dataGen.getCompany(csvLine.get(1).hashCode()));
 					out.println(String.join(",", csvLine));
 					if (i > numCustomer) {
-						System.out.println("Customer Table Generate!");
+						System.out.println("Finished Customer Table!");
 						break;
 					}
 				}

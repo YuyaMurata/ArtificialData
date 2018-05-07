@@ -53,7 +53,7 @@ public class PartsTable {
 				out.println(String.join(",", csvLine));
 
 				if (++i > numParts) {
-					System.out.println("Parts Table Generate!");
+					System.out.println("Finished Parts Table!");
 					break;
 				}
 			}

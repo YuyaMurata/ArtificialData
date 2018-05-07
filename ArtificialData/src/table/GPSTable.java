@@ -77,7 +77,7 @@ public class GPSTable {
 						System.out.println(i + " GPSレコード 生成");
 					}
 					if (i > numGPS) {
-						System.out.println("GPS Table Generate!");
+						System.out.println("Finished GPS Table!");
 						flg = false;
 						break;
 					}

@@ -69,7 +69,7 @@ public class SMRTable {
                     if(i%100000 == 0)
                         System.out.println(i+" SMRレコード 生成");
                     if (i > numSMR) {
-                        System.out.println("Parts Table Generate!");
+                        System.out.println("Finished Parts Table!");
                         break;
                     }
                 }

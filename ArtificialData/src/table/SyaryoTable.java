@@ -66,7 +66,7 @@ public class SyaryoTable {
 				}
 
 				if (++i > numSyaryo) {
-					System.out.println("Syaryo Table Generate!");
+					System.out.println("Finished Syaryo Table!");
 					break;
 				}
 			}
