@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  */
 public class SyaryoTable {
 
-	private String syaryoFile = "test\\TEST_SYARYO.csv";
+	public static String syaryoFile = "TEST_SYARYO.csv";
 	private Integer numSyaryo = 1000000;
 	private static Map indexMap = new HashMap();
 
@@ -37,7 +37,7 @@ public class SyaryoTable {
 		int i = 0;
         dataGen.initKisy();
 
-		try (PrintWriter out = CSVFileReadWrite.writer(syaryoFile)) {
+		try (PrintWriter out = CSVFileReadWrite.writer(InfoTable.filepath+syaryoFile)) {
 			//Header Name
 			List<String> header = layout.stream().map(l -> l.split(",")[1]).collect(Collectors.toList());
 			out.println(String.join(",", header));

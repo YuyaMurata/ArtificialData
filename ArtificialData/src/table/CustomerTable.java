@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  */
 public class CustomerTable {
 
-	private String cutomerFile = "test\\TEST_CUSTOMER.csv";
+	private String cutomerFile = "TEST_CUSTOMER.csv";
 	private Integer numCustomer = 100000;
 	private static DecimalFormat df = new DecimalFormat("00000");
 	private static DecimalFormat dm = new DecimalFormat("00");
@@ -38,7 +38,7 @@ public class CustomerTable {
 	public void createCustTable(DataGenerator dataGen, String file, List<String> layout) {
 		int i = 0;
 
-		try (PrintWriter out = CSVFileReadWrite.writer(cutomerFile)) {
+		try (PrintWriter out = CSVFileReadWrite.writer(InfoTable.filepath+cutomerFile)) {
 			//Header Name
 			out.println(layout.stream().map(l -> l.split(",")[1]).collect(Collectors.joining(",")));
 			try (BufferedReader csv = CSVFileReadWrite.reader(new File(file))) {

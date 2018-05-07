@@ -17,45 +17,46 @@ import java.util.stream.Collectors;
  * @author kaeru_yuya
  */
 public class PartsTable {
-    private String partsFile = "test\\TEST_PARTS.csv";
-    private Integer numParts = 30000000;
 
-    public PartsTable() {
-    }
-    
-    public PartsTable(Integer n) {
-        this.numParts = n;
-    }
-    
-    public void createPartsTable(DataGenerator dataGen, List<String> layout, List<String> sbns) {
-        int i = 0;
+	public static String partsFile = "TEST_PARTS.csv";
+	private Integer numParts = 30000000;
 
-        try (PrintWriter out = CSVFileReadWrite.writer(partsFile)) {
-            //Header Name
-            List<String> header = layout.stream().map(l -> l.split(",")[1]).collect(Collectors.toList());
-            out.println(String.join(",", header));
+	public PartsTable() {
+	}
 
-            //Data Generate
-            while (true) {
-                List<String> csvLine = new ArrayList();
-                for (String field : layout) {
-                    String[] l = field.split(",");
-                    csvLine.add(dataGen.getData(l[1], l[3], Integer.valueOf(l[4])));
-                }
-                
-                //作番
-                csvLine.set(header.indexOf("作番"), sbns.get(DataGenerator.genLogic(sbns.size())));
-                
-                //会社コードの規則化 顧客コードから会社コードが決まるようにする
-                csvLine.set(header.indexOf("会社コード"), dataGen.getCompany(csvLine.get(header.indexOf("作番")).hashCode()));
-                
-                out.println(String.join(",", csvLine));
+	public PartsTable(Integer n) {
+		this.numParts = n;
+	}
 
-                if (++i > numParts) {
-                    System.out.println("Parts Table Generate!");
-                    break;
-                }
-            }
-        }
-    }
+	public void createPartsTable(DataGenerator dataGen, List<String> layout, List<String> sbns) {
+		int i = 0;
+
+		try (PrintWriter out = CSVFileReadWrite.writer(InfoTable.filepath + partsFile)) {
+			//Header Name
+			List<String> header = layout.stream().map(l -> l.split(",")[1]).collect(Collectors.toList());
+			out.println(String.join(",", header));
+
+			//Data Generate
+			while (true) {
+				List<String> csvLine = new ArrayList();
+				for (String field : layout) {
+					String[] l = field.split(",");
+					csvLine.add(dataGen.getData(l[1], l[3], Integer.valueOf(l[4])));
+				}
+
+				//作番
+				csvLine.set(header.indexOf("作番"), sbns.get(DataGenerator.genLogic(sbns.size())));
+
+				//会社コードの規則化 顧客コードから会社コードが決まるようにする
+				csvLine.set(header.indexOf("会社コード"), dataGen.getCompany(csvLine.get(header.indexOf("作番")).hashCode()));
+
+				out.println(String.join(",", csvLine));
+
+				if (++i > numParts) {
+					System.out.println("Parts Table Generate!");
+					break;
+				}
+			}
+		}
+	}
 }

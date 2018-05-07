@@ -24,14 +24,16 @@ public class TestDataGenerator {
 
 	private static String BIS_LAYOUTPATH = "resource\\layout\\business\\";
 	private static String IOT_LAYOUTPATH = "resource\\layout\\iot\\";
+	
+	private static String OUTPATH = "test\\data\\";
 
 	public static void main(String[] args) {
 		DataGenerator dataGen = new DataGenerator();
-		InfoTable table = new InfoTable();
+		InfoTable table = new InfoTable(OUTPATH);
 		
-		File file = new File("test\\");
+		File file = new File(OUTPATH);
 		if(!file.exists())
-			file.mkdir();
+			file.mkdirs();
 
 		//システムテスト用 c=100000 s=1000000 機種=1000 o=10000000 w=20000000 p=30000000 sensor=2500000000
 		//小規模テスト(確認済み) c=1000 s=10000 機種=10 o=100000 w=200000 p=300000 sensor=200000

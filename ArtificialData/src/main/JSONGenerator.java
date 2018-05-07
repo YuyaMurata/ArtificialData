@@ -13,17 +13,23 @@ import json.create.JSONCreator;
  * @author 産総研・東工大OIL_2-2
  */
 public class JSONGenerator {
-    private static String FILEPATH = "test\\";
-    public static void main(String[] args) {
-		File file = new File("json\\");
-		if(!file.exists())
+
+	private static String FILEPATH = "test\\data\\";
+	private static String OUTPATH = "test\\json\\";
+	private static String ERRPATH = "test\\error\\";
+
+	public static void main(String[] args) {
+		File file = new File(OUTPATH);
+		if (!file.exists()) {
 			file.mkdir();
-		
-		file = new File("error\\");
-		if(!file.exists())
+		}
+
+		file = new File(ERRPATH);
+		if (!file.exists()) {
 			file.mkdir();
-		
-        JSONCreator json = new JSONCreator();
-        json.create(FILEPATH);
-    }
+		}
+
+		JSONCreator json = new JSONCreator();
+		json.create(FILEPATH, OUTPATH, ERRPATH);
+	}
 }

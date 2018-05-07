@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
  */
 public class SMRTable {
 
-    private String smrFile = "test\\TEST_SMR.csv";
+    public static String smrFile = "TEST_SMR.csv";
     private Integer numSMR = 250000000;
     private static String gpsFile = "TEST_GPS.csv";
 
@@ -32,16 +32,17 @@ public class SMRTable {
     
     public SMRTable(Integer n) {
         this.numSMR = n;
+	gpsFile = GPSTable.gpsFile;
     }
     
     public void createSMRTable(DataGenerator dataGen, List<String> layout) {
         int i = 0;
 
-        try (PrintWriter out = CSVFileReadWrite.writer(smrFile)) {
+        try (PrintWriter out = CSVFileReadWrite.writer(InfoTable.filepath+smrFile)) {
             //Header Name
             out.println(layout.stream().map(l -> l.split(",")[1]).collect(Collectors.joining(",")));
 
-            try (BufferedReader br = CSVFileReadWrite.reader(new File(gpsFile))) {
+            try (BufferedReader br = CSVFileReadWrite.reader(new File(InfoTable.filepath+gpsFile))) {
                 String line = br.readLine();
                 int smr = 0;
                 while((line = br.readLine()) != null){

@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  */
 public class OrderTable {
     
-    private String orderFile = "test\\TEST_ORDER.csv";
+    public static String orderFile = "TEST_ORDER.csv";
     private Integer numOrder = 10000000;
     private static Map indexMap = new HashMap();
 
@@ -34,7 +34,7 @@ public class OrderTable {
     public void createOrderTable(DataGenerator dataGen, List<String> layout, Map syaryoToCustomer) {
         int i = 0;
 
-        try (PrintWriter out = CSVFileReadWrite.writer(orderFile)) {
+        try (PrintWriter out = CSVFileReadWrite.writer(InfoTable.filepath+orderFile)) {
             //Header Name
             List<String> header = layout.stream().map(l -> l.split(",")[1]).collect(Collectors.toList());
             out.println(String.join(",", header));
