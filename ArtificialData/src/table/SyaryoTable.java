@@ -27,13 +27,15 @@ public class SyaryoTable {
 	public SyaryoTable() {
 	}
 
-	public SyaryoTable(Integer n) {
+	public SyaryoTable(Integer n, Integer k) {
 		this.numSyaryo = n;
 		DataGenerator.NUM_SYARYO = n;
+        DataGenerator.NUM_KISY = k;
 	}
 
 	public void createSyaryoTable(DataGenerator dataGen, List<String> layout) {
 		int i = 0;
+        dataGen.initKisy();
 
 		try (PrintWriter out = CSVFileReadWrite.writer(syaryoFile)) {
 			//Header Name

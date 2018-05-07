@@ -45,7 +45,7 @@ public class SyaryoObjectToJSON {
     }
     
     public void pretty(String file) {
-        try (PrintWriter pw = CSVFileReadWrite.writer("p" + file);
+        try (PrintWriter pw = CSVFileReadWrite.writer( file.replace("test", "ptest"));
                 BufferedReader br = CSVFileReadWrite.reader(new File(file))) {
             String line;
             StringBuilder sb = null;

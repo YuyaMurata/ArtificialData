@@ -8,6 +8,7 @@ package json.obj;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  *
@@ -15,7 +16,7 @@ import java.util.Map;
  */
 public class SyaryoObject {
     public String name;
-    public Map<String, Map<String, List>> map;
+    public Map<String, TreeMap<String, List>> map;
     
     //車両名変換
     private static transient Map<String, String> transNameMap = new HashMap();
@@ -28,7 +29,7 @@ public class SyaryoObject {
     
     public void add(String table, String id, List list){
         if(map.get(table) == null)
-            map.put(table, new HashMap<>());
+            map.put(table, new TreeMap<>());
         
         //ID重複チェック
         if(map.get(table).get(id) != null){

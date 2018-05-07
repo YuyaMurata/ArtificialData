@@ -55,8 +55,10 @@ public class OrderTable {
                 //機種の規則化 機番から機種が決まるようにする
                 csvLine.set(header.indexOf("型式"), dataGen.getType(csvLine.get(header.indexOf("機番")).hashCode()));
                 csvLine.set(header.indexOf("小変形"), dataGen.getSyhk(csvLine.get(header.indexOf("機番")).hashCode()));
+                
                 //会社コードの規則化 顧客コードから会社コードが決まるようにする
                 //csvLine.set(0, dataGen.getCompany(csvLine.get(9).hashCode()));
+                csvLine.set(header.indexOf("会社コード"), dataGen.getCompany(csvLine.get(header.indexOf("作番")).hashCode()));
                 
                 String key = csvLine.get(header.indexOf("機種"))+csvLine.get(header.indexOf("型式"))+csvLine.get(header.indexOf("小変形"))+csvLine.get(header.indexOf("機番"));
                 csvLine.set(header.indexOf("保有顧客コード"), (String) syaryoToCustomer.get(key));

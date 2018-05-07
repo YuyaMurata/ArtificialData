@@ -27,12 +27,13 @@ public class PartsTable {
         this.numParts = n;
     }
     
-    public void createPartsTable(DataGenerator dataGen, List<String> layout) {
+    public void createPartsTable(DataGenerator dataGen, List<String> layout, List<String> sbns) {
         int i = 0;
 
         try (PrintWriter out = CSVFileReadWrite.writer(partsFile)) {
             //Header Name
-            out.println(layout.stream().map(l -> l.split(",")[1]).collect(Collectors.joining(",")));
+            List<String> header = layout.stream().map(l -> l.split(",")[1]).collect(Collectors.toList());
+            out.println(String.join(",", header));
 
             //Data Generate
             while (true) {
@@ -41,6 +42,13 @@ public class PartsTable {
                     String[] l = field.split(",");
                     csvLine.add(dataGen.getData(l[1], l[3], Integer.valueOf(l[4])));
                 }
+                
+                //作番
+                csvLine.set(header.indexOf("作番"), sbns.get(DataGenerator.genLogic(sbns.size())));
+                
+                //会社コードの規則化 顧客コードから会社コードが決まるようにする
+                csvLine.set(header.indexOf("会社コード"), dataGen.getCompany(csvLine.get(header.indexOf("作番")).hashCode()));
+                
                 out.println(String.join(",", csvLine));
 
                 if (++i > numParts) {

@@ -26,8 +26,8 @@ import java.util.stream.Collectors;
 public class DataGenerator {
 
 	private static final int ALPHABET_SIZE = 'Z' - 'A';
-	private static int NUM_COMPANY = 0;
-	private static int NUM_KISY = 10; //TEST
+	private static int NUM_COMPANY = 9;
+	public static int NUM_KISY = 10; //TEST
 	public static int NUM_SYARYO = 1000000;
 	public static int NUM_CUSTOMER = 100000;
 	private static DecimalFormat custmerDF = new DecimalFormat("00000");
@@ -46,28 +46,6 @@ public class DataGenerator {
 	}
 
 	private void initialize() {
-		char alphabet1 = 'A';
-		DecimalFormat df = new DecimalFormat("00");
-
-		//機種リスト
-		for (int i = 0; i <= ALPHABET_SIZE; i++) {
-			String a1 = String.valueOf(alphabet1++);
-			char alphabet2 = 'A';
-			for (int j = 0; j <= ALPHABET_SIZE; j++) {
-				String kisy = a1 + String.valueOf(alphabet2++) + df.format(i % 11) + (j % 7);
-				kisyList.add(kisy);
-			}
-		}
-
-		//欠損値
-		kisyList.add("XXXXX");
-		kisyList.add(" ");
-		kisyList.add("--");
-		Collections.shuffle(kisyList);
-		kisyList = kisyList.subList(0, NUM_KISY);
-		System.out.print("機種リスト(" + kisyList.size() + ")\n  ");
-		System.out.println(kisyList);
-
 		//会社リスト
 		companyList.add("ABC");
 		companyList.add("DEF");
@@ -106,6 +84,31 @@ public class DataGenerator {
 			System.exit(0);
 		}
 	}
+    
+    public void initKisy(){
+        char alphabet1 = 'A';
+		DecimalFormat df = new DecimalFormat("00");
+
+		//機種リスト
+		for (int i = 0; i <= ALPHABET_SIZE; i++) {
+			String a1 = String.valueOf(alphabet1++);
+			char alphabet2 = 'A';
+			for (int j = 0; j <= ALPHABET_SIZE; j++) {
+				String kisy = a1 + String.valueOf(alphabet2++) + df.format(i % 11) + (j % 7);
+				kisyList.add(kisy);
+			}
+		}
+        Collections.shuffle(kisyList);
+		kisyList = kisyList.subList(0, NUM_KISY);
+        
+		//欠損値
+		kisyList.add("XXXXX");
+		kisyList.add(" ");
+		kisyList.add("--");
+		
+		System.out.print("機種リスト(" + kisyList.size() + ")\n  ");
+		System.out.println(kisyList);
+    }
 
 	public static Integer genLogic(int limit) {
 		return rand.nextInt(limit);
@@ -142,7 +145,7 @@ public class DataGenerator {
 			case "会社コード":
 				return companyList.get(genLogic(NUM_COMPANY));
 			case "機種":
-				return kisyList.get(genLogic(NUM_KISY));
+				return kisyList.get(genLogic(kisyList.size()));
 			case "型式":
 				return typeList.get(genLogic(typeList.size() - 1));
 			case "小変形":

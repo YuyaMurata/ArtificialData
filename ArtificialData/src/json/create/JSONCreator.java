@@ -33,16 +33,26 @@ public class JSONCreator {
 
         syaryo(new File(filepath + "TEST_SYARYO.csv"), syaryoMap);
         customer(new File(filepath + "TEST_CUSTOMER.csv"), syaryoMap);
-        order(new File(filepath + "TEST_Order.csv"), syaryoMap);
-        
+        order(new File(filepath + "TEST_ORDER.csv"), syaryoMap);
+        work(new File(filepath + "TEST_WORK.csv"), syaryoMap);
+        parts(new File(filepath + "TEST_PARTS.csv"), syaryoMap);
+        gps(new File(filepath + "TEST_GPS.csv"), syaryoMap);
+        smr(new File(filepath + "TEST_SMR.csv"), syaryoMap);
+
         SyaryoObjectToJSON json = new SyaryoObjectToJSON();
-        json.write(filename, syaryoMap);
-        json.pretty(filename);
+        json.write("json\\" + filename, syaryoMap);
+        json.pretty("json\\" + filename);
     }
 
     //Syaryo Table to JSON
     private void syaryo(File file, Map<String, SyaryoObject> map) {
-        try (BufferedReader br = CSVFileReadWrite.reader(file)) {
+        List<String> stopwords = new ArrayList();
+        stopwords.add("XXXXX");
+        stopwords.add(" ");
+        stopwords.add("--");
+
+        try (PrintWriter pw = CSVFileReadWrite.writer("error_" + file.getName());
+                BufferedReader br = CSVFileReadWrite.reader(file)) {
             String line = br.readLine();
             List<String> header = Arrays.asList(line.split(","));
             List<Integer> keys = new ArrayList();
@@ -61,6 +71,11 @@ public class JSONCreator {
                 String name = keys.stream()
                         .map(key -> data[key])
                         .collect(Collectors.joining("-"));
+
+                if (stopwords.contains(name.split("-")[0])) {
+                    pw.println(name + ":" + line);
+                    continue;
+                }
 
                 //Customert
                 String cust = custkeys.stream()
@@ -86,6 +101,8 @@ public class JSONCreator {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+
+        System.out.println("SyaryoTable Finish!");
     }
 
     //Customer Table to JSON
@@ -123,10 +140,12 @@ public class JSONCreator {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+        System.out.println("CustomerTable Finish!");
     }
 
-    //Customer Table to JSON
+    //Order Table to JSON
     Map<String, String> orderMap = new HashMap();
+
     private void order(File file, Map<String, SyaryoObject> map) {
         try (PrintWriter pw = CSVFileReadWrite.writer("error_" + file.getName());
                 BufferedReader br = CSVFileReadWrite.reader(file)) {
@@ -168,5 +187,152 @@ public class JSONCreator {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+
+        System.out.println("OrderTable Finish!");
+    }
+
+    private void work(File file, Map<String, SyaryoObject> map) {
+        try (PrintWriter pw = CSVFileReadWrite.writer("error_" + file.getName());
+                BufferedReader br = CSVFileReadWrite.reader(file)) {
+            String line = br.readLine();
+            List<String> header = Arrays.asList(line.split(","));
+            List<Integer> keys = new ArrayList();
+            keys.add(header.indexOf("会社コード"));
+            keys.add(header.indexOf("作番"));
+
+            int subKey = header.indexOf("作番");
+
+            while ((line = br.readLine()) != null) {
+                String[] data = line.split(",");
+                String sbnID = keys.stream()
+                        .map(key -> data[key])
+                        .collect(Collectors.joining("-"));
+
+                String sname = orderMap.get(sbnID);
+                if (orderMap.get(sbnID) == null) {
+                    pw.println("Null :" + sbnID + ":" + line);
+                    continue;
+                }
+
+                SyaryoObject syaryo = map.get(sname);
+                syaryo.add("作業", data[subKey], Arrays.asList(line.split(",")));
+
+                //Register
+                orderMap.put(sbnID, sname);
+                map.put(sname, syaryo);
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        System.out.println("WorkTable Finish!");
+    }
+
+    private void parts(File file, Map<String, SyaryoObject> map) {
+        try (PrintWriter pw = CSVFileReadWrite.writer("error_" + file.getName());
+                BufferedReader br = CSVFileReadWrite.reader(file)) {
+            String line = br.readLine();
+            List<String> header = Arrays.asList(line.split(","));
+            List<Integer> keys = new ArrayList();
+            keys.add(header.indexOf("会社コード"));
+            keys.add(header.indexOf("作番"));
+
+            int subKey = header.indexOf("作番");
+
+            while ((line = br.readLine()) != null) {
+                String[] data = line.split(",");
+                String sbnID = keys.stream()
+                        .map(key -> data[key])
+                        .collect(Collectors.joining("-"));
+
+                String sname = orderMap.get(sbnID);
+                if (orderMap.get(sbnID) == null) {
+                    pw.println("Null :" + sbnID + ":" + line);
+                    continue;
+                }
+
+                SyaryoObject syaryo = map.get(sname);
+                syaryo.add("部品", data[subKey], Arrays.asList(line.split(",")));
+
+                //Register
+                orderMap.put(sbnID, sname);
+                map.put(sname, syaryo);
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        System.out.println("PartsTable Finish!");
+    }
+
+    private void gps(File file, Map<String, SyaryoObject> map) {
+        try (PrintWriter pw = CSVFileReadWrite.writer("error_" + file.getName());
+                BufferedReader br = CSVFileReadWrite.reader(file)) {
+            String line = br.readLine();
+            List<String> header = Arrays.asList(line.split(","));
+            List<Integer> keys = new ArrayList();
+            keys.add(header.indexOf("機種"));
+            keys.add(header.indexOf("型式"));
+            keys.add(header.indexOf("小変形"));
+            keys.add(header.indexOf("機番"));
+
+            int subKey = header.indexOf("GPS時間");
+
+            while ((line = br.readLine()) != null) {
+                String[] data = line.split(",");
+                String name = keys.stream()
+                        .map(key -> data[key])
+                        .collect(Collectors.joining("-"));
+
+                //Syaryo
+                SyaryoObject syaryo;
+                if ((syaryo = map.get(name)) == null) {
+                    pw.println(name + ":" + line);
+                    continue;
+                }
+
+                syaryo.add("GPS", data[subKey], Arrays.asList(line.split(",")));
+
+                //Register
+                map.put(name, syaryo);
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        System.out.println("GPSTable Finish!");
+    }
+
+    private void smr(File file, Map<String, SyaryoObject> map) {
+        try (PrintWriter pw = CSVFileReadWrite.writer("error_" + file.getName());
+                BufferedReader br = CSVFileReadWrite.reader(file)) {
+            String line = br.readLine();
+            List<String> header = Arrays.asList(line.split(","));
+            List<Integer> keys = new ArrayList();
+            keys.add(header.indexOf("機種"));
+            keys.add(header.indexOf("型式"));
+            keys.add(header.indexOf("小変形"));
+            keys.add(header.indexOf("機番"));
+
+            int subKey = header.indexOf("SMR記録時間");
+
+            while ((line = br.readLine()) != null) {
+                String[] data = line.split(",");
+                String name = keys.stream()
+                        .map(key -> data[key])
+                        .collect(Collectors.joining("-"));
+
+                //Syaryo
+                SyaryoObject syaryo;
+                if ((syaryo = map.get(name)) == null) {
+                    pw.println(name + ":" + line);
+                    continue;
+                }
+                syaryo.add("SMR", data[subKey], Arrays.asList(line.split(",")));
+
+                //Register
+                map.put(name, syaryo);
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        System.out.println("SMRTable Finish!");
     }
 }

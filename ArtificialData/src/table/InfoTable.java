@@ -50,6 +50,21 @@ public class InfoTable {
         return list;
     }
     
+    public List getSBN(){
+        List list = new ArrayList();
+        try(BufferedReader br = CSVFileReadWrite.reader(new File("TEST_ORDER.csv"))){
+            String line = br.readLine();
+            while((line = br.readLine()) != null){
+                String[] f = line.split(",");
+                String key = f[1];
+                list.add(key);
+            }
+        } catch (IOException ex) {
+        }
+        
+        return list;
+    }
+    
     public Map syaryoCUST(){
         Map index = new HashMap();
         try(BufferedReader br = CSVFileReadWrite.reader(new File("TEST_SYARYO.csv"))){
