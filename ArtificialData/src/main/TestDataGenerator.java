@@ -40,12 +40,12 @@ public class TestDataGenerator {
 		//システムテスト用 c=100000 s=1000000 機種=1000 o=10000000 w=20000000 p=30000000 sensor=2500000000
 		//小規模テスト(確認済み) c=1000 s=10000 機種=10 o=100000 w=200000 p=300000 sensor=200000
 		//確認用　c=10 s=1000 機種=10 o=10000 w=10000 p=10000 sensor=10000
-		new CustomerTable(10).createCustTable(dataGen, "resource\\個人情報.csv", table.getLayout(BIS_LAYOUTPATH + "Layout_customer.csv"));
-		new SyaryoTable(1000, 10).createSyaryoTable(dataGen, table.getLayout(BIS_LAYOUTPATH + "Layout_syaryo.csv"));
-		new OrderTable(10000).createOrderTable(dataGen, table.getLayout(BIS_LAYOUTPATH + "Layout_order.csv"), table.syaryoCUST());
-		new WorkTable(10000).createWorkTable(dataGen, table.getLayout(BIS_LAYOUTPATH + "Layout_work.csv"), table.getSBN());
-		new PartsTable(10000).createPartsTable(dataGen, table.getLayout(BIS_LAYOUTPATH + "Layout_parts.csv"), table.getSBN());
-		new GPSTable(10000).createGPSTable(dataGen, table.getLayout(IOT_LAYOUTPATH + "Layout_GPS.csv"), table.getSyaryo());
-		new SMRTable(10000).createSMRTable(dataGen, table.getLayout(IOT_LAYOUTPATH + "Layout_SMR.csv"));
+		new CustomerTable(1000).createCustTable(dataGen, "resource\\個人情報.csv", table.getLayout(BIS_LAYOUTPATH + "Layout_customer.csv"));
+		new SyaryoTable(10000, 10).createSyaryoTable(dataGen, table.getLayout(BIS_LAYOUTPATH + "Layout_syaryo.csv"));
+		new OrderTable(100000).createOrderTable(dataGen, table.getLayout(BIS_LAYOUTPATH + "Layout_order.csv"), table.syaryoCUST());
+		new WorkTable(200000).createWorkTable(dataGen, table.getLayout(BIS_LAYOUTPATH + "Layout_work.csv"), table.getSBN());
+		new PartsTable(300000).createPartsTable(dataGen, table.getLayout(BIS_LAYOUTPATH + "Layout_parts.csv"), table.getSBN());
+		new GPSTable(200000).createGPSTable(dataGen, table.getLayout(IOT_LAYOUTPATH + "Layout_GPS.csv"), table.getSyaryo());
+		new SMRTable(200000).createSMRTable(dataGen, table.getLayout(IOT_LAYOUTPATH + "Layout_SMR.csv"));
 	}
 }
