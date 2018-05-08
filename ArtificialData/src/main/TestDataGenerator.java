@@ -37,7 +37,7 @@ public class TestDataGenerator {
 		if(!file.exists())
 			file.mkdirs();
 
-		//システムテスト用 c=100000 s=1000000 機種=1000 o=10000000 w=20000000 p=30000000 sensor=2500000000
+		//システムテスト用 customer=100000 syaryo(N,機種)=(1000000, 1000) order=10000000 work=20000000 parts=30000000 sensor(GPS,SMR)=2500000000
 		//小規模テスト(確認済み) c=1000 s=10000 機種=10 o=100000 w=200000 p=300000 sensor=200000
 		//確認用　c=10 s=1000 機種=10 o=10000 w=10000 p=10000 sensor=10000
 		new CustomerTable(1000).createCustTable(dataGen, "resource\\個人情報.csv", table.getLayout(BIS_LAYOUTPATH + "Layout_customer.csv"));
