@@ -18,8 +18,8 @@ import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 /**
- *
- * @author kaeru_yuya
+ * GPSテーブル生成
+ * @author murata
  */
 public class GPSTable {
 

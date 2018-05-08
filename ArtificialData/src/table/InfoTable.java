@@ -15,17 +15,18 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *
- * @author kaeru_yuya
+ * テーブル情報を管理するクラス
+ * @author murata
  */
 public class InfoTable {
 
+	//テーブル出力パス
 	public static String filepath = "";
-
 	public InfoTable(String path) {
 		this.filepath = path;
 	}
 
+	//レイアウトファイルの読み込み
 	public List getLayout(String filename) {
 		List layout = new ArrayList();
 		try (BufferedReader br = CSVFileReadWrite.reader(new File(filename))) {
@@ -38,6 +39,7 @@ public class InfoTable {
 		return layout;
 	}
 
+	//車両リストの読み込み(少量テーブル生成後)
 	public List getSyaryo() {
 		List list = new ArrayList();
 		try (BufferedReader br = CSVFileReadWrite.reader(new File(filepath+SyaryoTable.syaryoFile))) {
@@ -53,6 +55,7 @@ public class InfoTable {
 		return list;
 	}
 
+	//受注リストの取得(受注テーブル生成後)
 	public List getSBN() {
 		List list = new ArrayList();
 		try (BufferedReader br = CSVFileReadWrite.reader(new File(filepath+OrderTable.orderFile))) {
@@ -68,6 +71,7 @@ public class InfoTable {
 		return list;
 	}
 
+	//車両と顧客の取得(車両テーブル生成後)
 	public Map syaryoCUST() {
 		Map index = new HashMap();
 		try (BufferedReader br = CSVFileReadWrite.reader(new File(filepath+SyaryoTable.syaryoFile))) {

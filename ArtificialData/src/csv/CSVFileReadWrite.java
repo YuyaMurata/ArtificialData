@@ -15,7 +15,7 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
 /**
- *
+ * CSVファイルの読み書き用
  * @author ZZ17390
  */
 public class CSVFileReadWrite {

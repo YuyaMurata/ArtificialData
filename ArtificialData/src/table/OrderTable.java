@@ -15,8 +15,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- *
- * @author kaeru_yuya
+ * 受注テーブル生成
+ * @author murata
  */
 public class OrderTable {
     

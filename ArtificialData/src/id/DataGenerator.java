@@ -20,8 +20,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- *
- * @author kaeru_yuya
+ * テーブルのフィールド値を設定するクラス
+ * @author murata
  */
 public class DataGenerator {
 

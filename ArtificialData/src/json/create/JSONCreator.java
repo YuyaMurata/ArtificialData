@@ -20,7 +20,7 @@ import json.file.SyaryoObjectToJSON;
 import json.obj.SyaryoObject;
 
 /**
- *
+ * JSON生成用クラス
  * @author 産総研・東工大OIL_2-2
  */
 public class JSONCreator {
@@ -34,6 +34,7 @@ public class JSONCreator {
 		//Initialize Map
 		Map<String, SyaryoObject> syaryoMap = new HashMap();
 
+		//テーブルからデータを抽出しKey-Valueで保存
 		syaryo(new File(filepath + "TEST_SYARYO.csv"), syaryoMap);
 		customer(new File(filepath + "TEST_CUSTOMER.csv"), syaryoMap);
 		order(new File(filepath + "TEST_ORDER.csv"), syaryoMap);
@@ -41,7 +42,8 @@ public class JSONCreator {
 		parts(new File(filepath + "TEST_PARTS.csv"), syaryoMap);
 		gps(new File(filepath + "TEST_GPS.csv"), syaryoMap);
 		smr(new File(filepath + "TEST_SMR.csv"), syaryoMap);
-
+		
+		//JSONの出力
 		SyaryoObjectToJSON json = new SyaryoObjectToJSON();
 		json.write(outpath + filename, syaryoMap);
 		json.pretty(outpath + filename);
@@ -49,26 +51,34 @@ public class JSONCreator {
 
 	//Syaryo Table to JSON
 	private void syaryo(File file, Map<String, SyaryoObject> map) {
+		//ストップワードの設定
 		List<String> stopwords = new ArrayList();
 		stopwords.add("XXXXX");
 		stopwords.add(" ");
 		stopwords.add("--");
 
+		//Key-Value型での保存とエラーデータの出力
 		try (PrintWriter pw = CSVFileReadWrite.writer(errpath+"error_" + file.getName());
 			BufferedReader br = CSVFileReadWrite.reader(file)) {
+			
+			//ヘッダの抽出
 			String line = br.readLine();
 			List<String> header = Arrays.asList(line.split(","));
+			
+			//メインキーの設定
 			List<Integer> keys = new ArrayList();
 			keys.add(header.indexOf("機種"));
 			keys.add(header.indexOf("型式"));
 			keys.add(header.indexOf("小変形"));
 			keys.add(header.indexOf("機番"));
 
+			//サブキーの設定
 			int subKey = header.indexOf("納入年月日");
 			List<Integer> custkeys = new ArrayList();
 			custkeys.add(header.indexOf("会社コード"));
 			custkeys.add(header.indexOf("保有顧客コード"));
 
+			//テーブルを1行ずつ処理
 			while ((line = br.readLine()) != null) {
 				String[] data = line.split(",");
 				String name = keys.stream()
@@ -80,7 +90,7 @@ public class JSONCreator {
 					continue;
 				}
 
-				//Customert
+				//Customer
 				String cust = custkeys.stream()
 					.map(key -> data[key])
 					.collect(Collectors.joining("-"));
@@ -110,7 +120,6 @@ public class JSONCreator {
 
 	//Customer Table to JSON
 	Map<String, List<String>> custMap = new HashMap();
-
 	private void customer(File file, Map<String, SyaryoObject> map) {
 		try (PrintWriter pw = CSVFileReadWrite.writer(errpath+"error_" + file.getName());
 			BufferedReader br = CSVFileReadWrite.reader(file)) {
@@ -148,7 +157,6 @@ public class JSONCreator {
 
 	//Order Table to JSON
 	Map<String, String> orderMap = new HashMap();
-
 	private void order(File file, Map<String, SyaryoObject> map) {
 		try (PrintWriter pw = CSVFileReadWrite.writer(errpath+"error_" + file.getName());
 			BufferedReader br = CSVFileReadWrite.reader(file)) {

@@ -17,8 +17,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- *
- * @author kaeru_yuya
+ * 顧客テーブル生成
+ * @author murata
  */
 public class CustomerTable {
 

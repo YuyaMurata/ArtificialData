@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- *
- * @author kaeru_yuya
+ * 部品テーブルの生成
+ * @author murata
  */
 public class PartsTable {
 
