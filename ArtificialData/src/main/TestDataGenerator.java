@@ -36,11 +36,11 @@ public class TestDataGenerator {
 		
 		//小規模テスト(確認済み) c=1000 s=10000 機種=10 o=100000 w=200000 p=300000 sensor=250000
 		//性能  testdata file=553MB  generate time=42s  json time= 92s  memory=3.5GB json file=436MB
-		generate(1000, 10000, 10, 100000, 200000, 300000, 250000, 250000);
+		//generate(1000, 10000, 10, 100000, 200000, 300000, 250000, 250000);
 		
 		//確認用　c=10 s=1000 機種=10 o=10000 w=10000 p=10000 sensor=10000
 		//性能  testdata file=38MB  generate time=4s  json time= 9s  memory=600MB json file=34MB
-		//generate(10, 1000, 10, 10000, 10000, 10000, 10000, 10000);
+		generate(10, 1000, 10, 10000, 10000, 10000, 10000, 10000);
 	}
 	
 	private static void generate(int customer, int syaryo, int syaryo_kisy, int order, int work, int parts, int gps, int smr){
