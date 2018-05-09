@@ -35,11 +35,11 @@ public class TestDataGenerator {
 		//generate(100000, 1000000, 676, 10000000, 20000000, 30000000, 250000000, 250000000);
 		
 		//小規模テスト(確認済み) c=1000 s=10000 機種=10 o=100000 w=200000 p=300000 sensor=250000
-		//性能  testdata file=553MB  generate time=42s  json time= 9s  memory=3.5GB json file=436MB
+		//性能  testdata file=553MB  generate time=42s  json time= 92s  memory=3.5GB json file=436MB
 		generate(1000, 10000, 10, 100000, 200000, 300000, 250000, 250000);
 		
 		//確認用　c=10 s=1000 機種=10 o=10000 w=10000 p=10000 sensor=10000
-		//性能  testdata file=38MB  generate time=4s  json time= 92s  memory=600MB json file=34MB
+		//性能  testdata file=38MB  generate time=4s  json time= 9s  memory=600MB json file=34MB
 		//generate(10, 1000, 10, 10000, 10000, 10000, 10000, 10000);
 	}
 	
@@ -52,6 +52,7 @@ public class TestDataGenerator {
 		if(!file.exists())
 			file.mkdirs();
 		
+        //テストデータ生成
 		new CustomerTable(customer).createCustTable(dataGen, "resource\\個人情報.csv", table.getLayout(BIS_LAYOUTPATH + "Layout_customer.csv"));
 		new SyaryoTable(syaryo, syaryo_kisy).createSyaryoTable(dataGen, table.getLayout(BIS_LAYOUTPATH + "Layout_syaryo.csv"));
 		new OrderTable(order).createOrderTable(dataGen, table.getLayout(BIS_LAYOUTPATH + "Layout_order.csv"), table.syaryoCUST());
