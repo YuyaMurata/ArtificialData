@@ -64,7 +64,11 @@ public class OrderTable {
                 csvLine.set(header.indexOf("保有顧客コード"), (String) syaryoToCustomer.get(key));
                 
                 out.println(String.join(",", csvLine));
-                if (++i > numOrder) {
+                i++;
+                if (i % 100000 == 0) {
+						System.out.println(i + " 受注レコード 生成");
+					}
+                if (i > numOrder) {
                     System.out.println("Finished Order Table!");
                     break;
                 }

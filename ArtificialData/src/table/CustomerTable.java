@@ -69,8 +69,10 @@ public class CustomerTable {
 					//会社コードの規則化 顧客コードから会社コードが決まるようにする
 					//csvLine.set(0, dataGen.getCompany(csvLine.get(1).hashCode()));
 					out.println(String.join(",", csvLine));
+                    if (i % 100000 == 0) {
+						System.out.println(i + " 顧客レコード 生成");
+					}
 					if (i > numCustomer) {
-						System.out.println("Finished Customer Table!");
 						break;
 					}
 				}
@@ -78,6 +80,8 @@ public class CustomerTable {
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
+        
+        System.out.println("Finished Customer Table!");
 	}
 
 }

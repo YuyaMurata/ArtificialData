@@ -51,8 +51,11 @@ public class WorkTable {
 				csvLine.set(header.indexOf("会社コード"), dataGen.getCompany(csvLine.get(header.indexOf("作番")).hashCode()));
 
 				out.println(String.join(",", csvLine));
-
-				if (++i > numWork) {
+                i++;
+                if (i % 100000 == 0) {
+						System.out.println(i + " 作業レコード 生成");
+					}
+				if (i > numWork) {
 					System.out.println("Finished Work Table!");
 					break;
 				}

@@ -64,8 +64,12 @@ public class SyaryoTable {
 				} else {
 					i--;
 				}
-
-				if (++i > numSyaryo) {
+                
+                i++;
+                if (i % 100000 == 0) {
+						System.out.println(i + " 車両レコード 生成");
+					}
+				if (i > numSyaryo) {
 					System.out.println("Finished Syaryo Table!");
 					break;
 				}

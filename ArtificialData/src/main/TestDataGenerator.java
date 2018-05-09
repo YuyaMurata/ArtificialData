@@ -30,16 +30,16 @@ public class TestDataGenerator {
 
 	public static void main(String[] args) {
 		
-		//システムテスト用 customer=100000 syaryo(N,機種)=(1000000, 1000) order=10000000 work=20000000 parts=30000000 sensor(GPS,SMR)=250000000
-		//性能  testdata file=553MB  generate time=42s  json time= 9s  memory=600MB json file=34MB
-		//generate(100000, 1000000, 1000, 10000000, 20000000, 30000000, 250000000, 250000000);
+		//システムテスト用 customer=100000 syaryo(N,機種)=(1000000, 676(MAX)) order=10000000 work=20000000 parts=30000000 sensor(GPS,SMR)=250000000
+		//性能  testdata file=98.7GB  generate time=2h10m  json time= ?s  memory=? json file=?
+		//generate(100000, 1000000, 676, 10000000, 20000000, 30000000, 250000000, 250000000);
 		
 		//小規模テスト(確認済み) c=1000 s=10000 機種=10 o=100000 w=200000 p=300000 sensor=250000
-		//性能  testdata file=553MB  generate time=42s  json time= 9s  memory=600MB json file=34MB
+		//性能  testdata file=553MB  generate time=42s  json time= 9s  memory=3.5GB json file=436MB
 		generate(1000, 10000, 10, 100000, 200000, 300000, 250000, 250000);
 		
 		//確認用　c=10 s=1000 機種=10 o=10000 w=10000 p=10000 sensor=10000
-		//性能  testdata file=38MB  generate time=4s  json time= 9s  memory=600MB json file=34MB
+		//性能  testdata file=38MB  generate time=4s  json time= 92s  memory=600MB json file=34MB
 		//generate(10, 1000, 10, 10000, 10000, 10000, 10000, 10000);
 	}
 	
