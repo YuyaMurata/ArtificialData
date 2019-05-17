@@ -48,7 +48,7 @@ public class SyaryoObjectToJSON {
 	//JSONの整形
 	public void pretty(String file) {
 		try (PrintWriter pw = CSVFileReadWrite.writer(file.replace("test_", "ptest_"));
-			BufferedReader br = CSVFileReadWrite.reader(new File(file))) {
+			BufferedReader br = CSVFileReadWrite.reader(file)) {
 			String line;
 			StringBuilder sb = null;
 			Boolean flg = false;

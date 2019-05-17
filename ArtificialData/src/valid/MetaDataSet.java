@@ -6,18 +6,16 @@
 package valid;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
  *
  * @author zz17807
  */
-public class MetaDataCheck {
+public class MetaDataSet {
     private static final String PATH = "metaset\\kompas\\";
-    private static Map<String, File> files = new HashMap();
+    public static Map<String, File> files = new HashMap();
     
     public static void setFiles(){
         File path = new File(PATH);
@@ -35,7 +33,7 @@ public class MetaDataCheck {
         setFiles();
         
         //Test
-        MetaFileDefine def = new MetaFileDefine(files.get("test_syaryo.json"));
+        MetaDataDefine def = new MetaDataDefine(files.get("test_syaryo.json"));
         def.getData().entrySet().stream().map(d -> d.getKey()+":"+d.getValue().size()+" u="+def.getUnique(d.getKey())).forEach(System.out::println);
     }
 }

@@ -59,7 +59,7 @@ public class JSONCreator {
 
 		//Key-Value型での保存とエラーデータの出力
 		try (PrintWriter pw = CSVFileReadWrite.writer(errpath+"error_" + file.getName());
-			BufferedReader br = CSVFileReadWrite.reader(file)) {
+			BufferedReader br = CSVFileReadWrite.reader(file.getAbsolutePath())) {
 			
 			//ヘッダの抽出
 			String line = br.readLine();
@@ -122,7 +122,7 @@ public class JSONCreator {
 	Map<String, List<String>> custMap = new HashMap();
 	private void customer(File file, Map<String, SyaryoObject> map) {
 		try (PrintWriter pw = CSVFileReadWrite.writer(errpath+"error_" + file.getName());
-			BufferedReader br = CSVFileReadWrite.reader(file)) {
+			BufferedReader br = CSVFileReadWrite.reader(file.getAbsolutePath())) {
 			String line = br.readLine();
 			List<String> header = Arrays.asList(line.split(","));
 			List<Integer> keys = new ArrayList();
@@ -159,7 +159,7 @@ public class JSONCreator {
 	Map<String, String> orderMap = new HashMap();
 	private void order(File file, Map<String, SyaryoObject> map) {
 		try (PrintWriter pw = CSVFileReadWrite.writer(errpath+"error_" + file.getName());
-			BufferedReader br = CSVFileReadWrite.reader(file)) {
+			BufferedReader br = CSVFileReadWrite.reader(file.getAbsolutePath())) {
 			String line = br.readLine();
 			List<String> header = Arrays.asList(line.split(","));
 			List<Integer> keys = new ArrayList();
@@ -204,7 +204,7 @@ public class JSONCreator {
 
 	private void work(File file, Map<String, SyaryoObject> map) {
 		try (PrintWriter pw = CSVFileReadWrite.writer(errpath+"error_" + file.getName());
-			BufferedReader br = CSVFileReadWrite.reader(file)) {
+			BufferedReader br = CSVFileReadWrite.reader(file.getAbsolutePath())) {
 			String line = br.readLine();
 			List<String> header = Arrays.asList(line.split(","));
 			List<Integer> keys = new ArrayList();
@@ -240,7 +240,7 @@ public class JSONCreator {
 
 	private void parts(File file, Map<String, SyaryoObject> map) {
 		try (PrintWriter pw = CSVFileReadWrite.writer(errpath+"error_" + file.getName());
-			BufferedReader br = CSVFileReadWrite.reader(file)) {
+			BufferedReader br = CSVFileReadWrite.reader(file.getAbsolutePath())) {
 			String line = br.readLine();
 			List<String> header = Arrays.asList(line.split(","));
 			List<Integer> keys = new ArrayList();
@@ -276,7 +276,7 @@ public class JSONCreator {
 
 	private void gps(File file, Map<String, SyaryoObject> map) {
 		try (PrintWriter pw = CSVFileReadWrite.writer(errpath+"error_" + file.getName());
-			BufferedReader br = CSVFileReadWrite.reader(file)) {
+			BufferedReader br = CSVFileReadWrite.reader(file.getAbsolutePath())) {
 			String line = br.readLine();
 			List<String> header = Arrays.asList(line.split(","));
 			List<Integer> keys = new ArrayList();
@@ -313,7 +313,7 @@ public class JSONCreator {
 
 	private void smr(File file, Map<String, SyaryoObject> map) {
 		try (PrintWriter pw = CSVFileReadWrite.writer(errpath+"error_" + file.getName());
-			BufferedReader br = CSVFileReadWrite.reader(file)) {
+			BufferedReader br = CSVFileReadWrite.reader(file.getAbsolutePath())) {
 			String line = br.readLine();
 			List<String> header = Arrays.asList(line.split(","));
 			List<Integer> keys = new ArrayList();

@@ -93,7 +93,7 @@ public class GPSTable {
 		index = index % files.length;
 		File f = files[index];
 
-		try (BufferedReader csv = CSVFileReadWrite.reader(f)) {
+		try (BufferedReader csv = CSVFileReadWrite.reader(f.getAbsolutePath())) {
 			List rt = root(csv);
 			List dates = DataGenerator.randomDates(rt.size());
 

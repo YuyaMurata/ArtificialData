@@ -41,7 +41,7 @@ public class CustomerTable {
 		try (PrintWriter out = CSVFileReadWrite.writer(InfoTable.filepath+cutomerFile)) {
 			//Header Name
 			out.println(layout.stream().map(l -> l.split(",")[1]).collect(Collectors.joining(",")));
-			try (BufferedReader csv = CSVFileReadWrite.reader(new File(file))) {
+			try (BufferedReader csv = CSVFileReadWrite.reader(file)) {
 				String line = csv.readLine();
 
 				//Data Generate

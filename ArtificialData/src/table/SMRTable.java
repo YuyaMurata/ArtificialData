@@ -40,7 +40,7 @@ public class SMRTable {
             //Header Name
             out.println(layout.stream().map(l -> l.split(",")[1]).collect(Collectors.joining(",")));
 
-            try (BufferedReader br = CSVFileReadWrite.reader(new File(InfoTable.filepath+gpsFile))) {
+            try (BufferedReader br = CSVFileReadWrite.reader(InfoTable.filepath+gpsFile)) {
                 String line = br.readLine();
                 int smr = 0;
                 while((line = br.readLine()) != null){

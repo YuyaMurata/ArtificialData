@@ -29,7 +29,7 @@ public class InfoTable {
 	//レイアウトファイルの読み込み
 	public List getLayout(String filename) {
 		List layout = new ArrayList();
-		try (BufferedReader br = CSVFileReadWrite.reader(new File(filename))) {
+		try (BufferedReader br = CSVFileReadWrite.reader(filename)) {
 			String line = br.readLine();
 			while ((line = br.readLine()) != null) {
 				layout.add(line);
@@ -42,7 +42,7 @@ public class InfoTable {
 	//車両リストの読み込み(少量テーブル生成後)
 	public List getSyaryo() {
 		List list = new ArrayList();
-		try (BufferedReader br = CSVFileReadWrite.reader(new File(filepath+SyaryoTable.syaryoFile))) {
+		try (BufferedReader br = CSVFileReadWrite.reader(filepath+SyaryoTable.syaryoFile)) {
 			String line = br.readLine();
 			while ((line = br.readLine()) != null) {
 				String[] f = line.split(",");
@@ -58,7 +58,7 @@ public class InfoTable {
 	//受注リストの取得(受注テーブル生成後)
 	public List getSBN() {
 		List list = new ArrayList();
-		try (BufferedReader br = CSVFileReadWrite.reader(new File(filepath+OrderTable.orderFile))) {
+		try (BufferedReader br = CSVFileReadWrite.reader(filepath+OrderTable.orderFile)) {
 			String line = br.readLine();
 			while ((line = br.readLine()) != null) {
 				String[] f = line.split(",");
@@ -74,7 +74,7 @@ public class InfoTable {
 	//車両と顧客の取得(車両テーブル生成後)
 	public Map syaryoCUST() {
 		Map index = new HashMap();
-		try (BufferedReader br = CSVFileReadWrite.reader(new File(filepath+SyaryoTable.syaryoFile))) {
+		try (BufferedReader br = CSVFileReadWrite.reader(filepath+SyaryoTable.syaryoFile)) {
 			String line = br.readLine();
 			while ((line = br.readLine()) != null) {
 				String[] f = line.split(",");

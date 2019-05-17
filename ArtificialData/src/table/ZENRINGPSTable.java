@@ -34,7 +34,7 @@ public class ZENRINGPSTable {
 			pw.println("uid,lon,lat,label");
 			for (File f : files) {
 				System.out.println(f.getName());
-				try (BufferedReader csv = CSVFileReadWrite.reader(f)) {
+				try (BufferedReader csv = CSVFileReadWrite.reader(f.getAbsolutePath())) {
 					List rt = root(csv);
 					List dates = DataGenerator.randomDates(rt.size());
 

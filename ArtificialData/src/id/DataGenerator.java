@@ -77,7 +77,7 @@ public class DataGenerator {
 		syList.add("KE");
 
 		//都道府県
-		try (BufferedReader br = CSVFileReadWrite.reader(new File("resource\\都道府県.csv"))) {
+		try (BufferedReader br = CSVFileReadWrite.reader("resource\\都道府県.csv")) {
 			prefList = br.lines().collect(Collectors.toList());
 		} catch (IOException ex) {
 			ex.printStackTrace();

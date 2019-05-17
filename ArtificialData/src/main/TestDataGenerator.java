@@ -5,6 +5,7 @@
  */
 package main;
 
+import gen.CreateRecode;
 import id.DataGenerator;
 import java.io.File;
 import table.CustomerTable;
@@ -15,6 +16,8 @@ import table.PartsTable;
 import table.SMRTable;
 import table.SyaryoTable;
 import table.WorkTable;
+import valid.MetaDataSet;
+import valid.MetaDataDefine;
 
 /**
  * テストデータ生成メインクラス
@@ -40,7 +43,13 @@ public class TestDataGenerator {
 		
 		//確認用　c=10 s=1000 機種=10 o=10000 w=10000 p=10000 sensor=10000
 		//性能  testdata file=38MB  generate time=4s  json time= 9s  memory=600MB json file=34MB
-		generate(10, 1000, 10, 10000, 10000, 10000, 10000, 10000);
+		//generate(10, 1000, 10, 10000, 10000, 10000, 10000, 10000);
+                
+                
+                //Test
+                MetaDataSet.setFiles();
+                CreateRecode rec = new CreateRecode(MetaDataSet.files.get("test_syaryo.json"));
+                rec.create(10);
 	}
 	
 	private static void generate(int customer, int syaryo, int syaryo_kisy, int order, int work, int parts, int gps, int smr){
