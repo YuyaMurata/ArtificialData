@@ -21,16 +21,17 @@ import javafx.stage.Stage;
  * @author zz17807
  */
 public class MetaDataFXMain extends Application {
+
     public static Stage parentStage;
-    
+
     @Override
     public void start(Stage stage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("MetaDataFXML.fxml"));
-        
+
         Scene scene = new Scene(root);
-        
+
         parentStage = stage;
-        
+
         stage.setTitle("Hello World!");
         stage.setScene(scene);
         stage.show();
@@ -42,5 +43,4 @@ public class MetaDataFXMain extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
 }
