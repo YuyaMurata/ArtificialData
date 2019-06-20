@@ -20,10 +20,11 @@ import java.util.stream.Collectors;
 public class MetaDataVisualize {
     public static void main(String[] args) {
         MetaDataSet.setFiles();
-        MetaDataSet.files.keySet().stream().limit(1).forEach(f ->{
+        MetaDataSet.files.keySet().stream().forEach(f ->{
             MetaDataDefine meta = new MetaDataDefine(MetaDataSet.files.get(f));
             Map<String, Map<String, Double>> data = meta.getData();
             
+            System.out.println(f);
             Map<String, String> layout = ListToCSV.toMap("resource\\kmresource\\layout\\"+f.replace("test", "Layout").replace(".json", ".csv"), 2, 1);
             
             try(PrintWriter pw = CSVFileReadWrite.writerSJIS(f+".csv")){
