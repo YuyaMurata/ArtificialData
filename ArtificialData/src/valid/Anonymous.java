@@ -17,9 +17,18 @@ import org.apache.commons.lang3.RandomStringUtils;
 public class Anonymous {
     private static MersenneTwisterFast rand = new MersenneTwisterFast();
     
-    public static void main(String[] args) {
-        System.out.println(C(100));
-        System.out.println(N("+0000001234."));
+    //匿名化処理の分岐
+    public static String A(String anonym, String key, String orig){
+        if(anonym.contains("ID") || anonym.contains("担当名") || anonym.contains("機種・機番")){
+            return ID(key, orig);
+        }else if(anonym.contains("文字列")){
+            return C(orig.length());
+        }else if(anonym.contains("数値") || anonym.contains("金額")  || anonym.contains("SMR")){
+            return N(orig);
+        }else if(anonym.contains("その他")){
+            return null;
+        }else
+            return orig;
     }
     
     //インデックス
@@ -33,7 +42,11 @@ public class Anonymous {
         }else
             id.put(key, id.get(key)+1);
         
-        return orig.substring(0)+key.substring(0)+id.get(key);
+        //文字が含まれる場合、文字つきID
+        if(orig.contains("[a-zA-Z]")){
+            return orig.substring(0,1)+key.toUpperCase().substring(0,1)+String.format("%07d", id.get(key));
+        }else
+            return String.format("%07d", id.get(key));
     }
     
     //ランダム文字列
@@ -46,9 +59,6 @@ public class Anonymous {
         if(orig.contains("+") || orig.contains("-")){
             String f = orig.replace("+", "").replace("-", "");
             f = "%+0"+(f.length()-1)+"d.";
-            //f = "+"+f+";"+"-"+f;
-            //DecimalFormat df = new DecimalFormat(f);
-            //return df.format(rand.nextInt());
             return String.format(f, rand.nextInt());
         }
         
