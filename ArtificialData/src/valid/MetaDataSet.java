@@ -14,15 +14,15 @@ import java.util.Map;
  * @author zz17807
  */
 public class MetaDataSet {
-    private static final String PATH = "metaset\\kompas\\";
+    public static final String PATH = "metaset\\kompas\\";
     public static Map<String, File> files = new HashMap();
     
-    public static void setFiles(){
-        File path = new File(PATH);
+    public static void setFiles(String path){
+        File p = new File(path);
         int idx = 0;
         
         System.out.println("Read Metafiles:");
-        for(File f : path.listFiles()){
+        for(File f : p.listFiles()){
             files.put(f.getName(), f);
             System.out.println("  "+idx+":"+f.getName());
             idx++;
@@ -30,7 +30,7 @@ public class MetaDataSet {
     }
     
     public static void main(String[] args) {
-        setFiles();
+        setFiles(PATH);
         
         //Test
         MetaDataDefine def = new MetaDataDefine(files.get("test_syaryo.json"));

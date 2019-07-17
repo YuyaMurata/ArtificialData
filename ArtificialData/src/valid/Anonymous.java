@@ -9,6 +9,7 @@ import ec.util.MersenneTwisterFast;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 
 /**
  *
@@ -32,21 +33,25 @@ public class Anonymous {
     }
     
     //インデックス
-    static Map<String, Integer> id = new HashMap();
+    private static Map<String, Integer> id = new HashMap();
     public static String ID(String key, String orig){
         if(orig.length() < 2)
             return orig;
         
-        if(id.get(key) == null){
-            id.put(key, 0);
-        }else
-            id.put(key, id.get(key)+1);
-        
+        String kid = key + orig;
         //文字が含まれる場合、文字つきID
-        if(orig.contains("[a-zA-Z]")){
-            return orig.substring(0,1)+key.toUpperCase().substring(0,1)+String.format("%07d", id.get(key));
-        }else
-            return String.format("%07d", id.get(key));
+        if(!NumberUtils.isNumber(orig))
+            kid = orig.substring(0,1)+key.toUpperCase().substring(0,1)+orig.substring(1,2);
+            
+        if(id.get(kid) == null)
+            id.put(kid, 0);
+        else
+            id.put(kid, id.get(kid)+1);
+        
+        if(!NumberUtils.isNumber(orig))
+            return kid+String.format("%03d", id.get(kid));
+        else
+            return String.format("%06d", id.get(kid));
     }
     
     //ランダム文字列

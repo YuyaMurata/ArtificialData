@@ -45,7 +45,7 @@ public class MetaDataFXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        MetaDataSet.setFiles();
+        MetaDataSet.setFiles("metaset\\anonymous\\");
         fileDropMenu.getItems().addAll(MetaDataSet.files.keySet());
     }
     

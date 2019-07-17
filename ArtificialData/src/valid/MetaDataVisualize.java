@@ -8,7 +8,6 @@ package valid;
 import csv.CSVFileReadWrite;
 import csv.ListToCSV;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -19,7 +18,7 @@ import java.util.stream.Collectors;
  */
 public class MetaDataVisualize {
     public static void main(String[] args) {
-        MetaDataSet.setFiles();
+        MetaDataSet.setFiles("metaset\\anonymous\\");
         MetaDataSet.files.keySet().stream().forEach(f ->{
             MetaDataDefine meta = new MetaDataDefine(MetaDataSet.files.get(f));
             Map<String, Map<String, Double>> data = meta.getData();

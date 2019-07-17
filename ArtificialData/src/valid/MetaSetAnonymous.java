@@ -18,10 +18,11 @@ public class MetaSetAnonymous {
 
     //
     static Map<String, String> rule = ListToCSV.toMap("metaset\\国内データ項目匿名化案20190704.csv", 2, 29);
+    static String path = "metaset\\anonymous\\";
 
     public static void main(String[] args) {
         System.out.println(rule);
-        MetaDataSet.setFiles();
+        MetaDataSet.setFiles(MetaDataSet.PATH);
         
         /*
         MetaDataSet.files.keySet().stream().forEach(f -> {
@@ -37,10 +38,10 @@ public class MetaSetAnonymous {
             String field = key.split("\\.")[1];
             String ruleField = field.toUpperCase();
             
-            anymdata.put(field, new LinkedHashMap());
+            anymdata.put(key, new LinkedHashMap());
             
             d.getValue().entrySet().stream().forEach(df ->{
-                anymdata.get(field).put(
+                anymdata.get(key).put(
                         Anonymous.A(rule.get(field.toUpperCase()), 
                         field, df.getKey()), 
                         df.getValue()
@@ -48,6 +49,10 @@ public class MetaSetAnonymous {
             });
         });
         
-        new MapToJSON().toJSON("test_syaryo.json", anymdata);
+        Map total = new HashMap();
+        total.put("_", meta.total);
+        anymdata.put("Total", total); 
+        
+        new MapToJSON().toJSON(path+"test_syaryo.json", anymdata);
     }
 }

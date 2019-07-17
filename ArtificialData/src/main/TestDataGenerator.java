@@ -47,7 +47,7 @@ public class TestDataGenerator {
                 
                 
                 //Test
-                MetaDataSet.setFiles();
+                MetaDataSet.setFiles(MetaDataSet.PATH);
                 CreateRecode rec = new CreateRecode(MetaDataSet.files.get("test_syaryo.json"));
                 rec.create(10);
 	}
