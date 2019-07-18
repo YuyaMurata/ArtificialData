@@ -20,6 +20,9 @@ public class Anonymous {
     
     //匿名化処理の分岐
     public static String A(String anonym, String key, String orig){
+        if(anonym == null)
+            return null;
+        
         if(anonym.contains("ID") || anonym.contains("担当名") || anonym.contains("機種・機番")){
             return ID(key, orig);
         }else if(anonym.contains("文字列")){
@@ -41,7 +44,7 @@ public class Anonymous {
         String kid = key + orig;
         //文字が含まれる場合、文字つきID
         if(!NumberUtils.isNumber(orig))
-            kid = orig.substring(0,1)+key.toUpperCase().substring(0,1)+orig.substring(1,2);
+            kid = orig.substring(0,1)+key.toUpperCase().substring(0,1);
             
         if(id.get(kid) == null)
             id.put(kid, 0);
@@ -61,7 +64,7 @@ public class Anonymous {
     
     //ランダム数字
     public static String N(String orig) {
-        if(orig.contains("+") || orig.contains("-")){
+        if(orig.contains("+") || orig.contains("-0")){
             String f = orig.replace("+", "").replace("-", "");
             f = "%+0"+(f.length()-1)+"d.";
             return String.format(f, rand.nextInt());

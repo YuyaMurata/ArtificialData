@@ -23,36 +23,34 @@ public class MetaSetAnonymous {
     public static void main(String[] args) {
         System.out.println(rule);
         MetaDataSet.setFiles(MetaDataSet.PATH);
-        
-        /*
-        MetaDataSet.files.keySet().stream().forEach(f -> {
-            MetaDataDefine meta = new MetaDataDefine(MetaDataSet.files.get(f));
+
+        MetaDataSet.files.values().stream().forEach(f -> {
+            MetaDataDefine meta = new MetaDataDefine(f); //MetaDataSet.files.get("test_parts.json")
+            System.out.println(meta.name);
+            
             Map<String, Map<String, Double>> data = meta.getData();
-        });*/
-        
-        MetaDataDefine meta = new MetaDataDefine(MetaDataSet.files.get("test_syaryo.json"));
-        Map<String, Map<String, Double>> data = meta.getData();
-        Map<String, Map<String, Double>> anymdata = new LinkedHashMap<>();
-        data.entrySet().stream().limit(data.size()-1).forEach(d ->{
-            String key = d.getKey();
-            String field = key.split("\\.")[1];
-            String ruleField = field.toUpperCase();
-            
-            anymdata.put(key, new LinkedHashMap());
-            
-            d.getValue().entrySet().stream().forEach(df ->{
-                anymdata.get(key).put(
-                        Anonymous.A(rule.get(field.toUpperCase()), 
-                        field, df.getKey()), 
-                        df.getValue()
-                );
+            Map<String, Map<String, Double>> anymdata = new LinkedHashMap<>();
+            data.entrySet().stream().limit(data.size() - 1).forEach(d -> {
+                String key = d.getKey();
+                String field = key.split("\\.")[1];
+                String ruleField = field.toUpperCase();
+
+                anymdata.put(key, new LinkedHashMap());
+
+                d.getValue().entrySet().stream().forEach(df -> {
+                    anymdata.get(key).put(
+                            Anonymous.A(rule.get(field.toUpperCase()),
+                                    field, df.getKey()),
+                            df.getValue()
+                    );
+                });
             });
+
+            Map total = new HashMap();
+            total.put("_", meta.total);
+            anymdata.put("Total", total);
+
+            new MapToJSON().toJSON(path + meta.name, anymdata);
         });
-        
-        Map total = new HashMap();
-        total.put("_", meta.total);
-        anymdata.put("Total", total); 
-        
-        new MapToJSON().toJSON(path+"test_syaryo.json", anymdata);
     }
 }

@@ -9,7 +9,9 @@ import csv.CSVFileReadWrite;
 import csv.ListToCSV;
 import java.io.PrintWriter;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ForkJoinPool;
 import java.util.stream.Collectors;
 
 /**
@@ -19,11 +21,11 @@ import java.util.stream.Collectors;
 public class MetaDataVisualize {
     public static void main(String[] args) {
         MetaDataSet.setFiles("metaset\\anonymous\\");
-        MetaDataSet.files.keySet().stream().forEach(f ->{
+        
+        MetaDataSet.files.keySet().parallelStream().forEach(f ->{
             MetaDataDefine meta = new MetaDataDefine(MetaDataSet.files.get(f));
             Map<String, Map<String, Double>> data = meta.getData();
             
-            System.out.println(f);
             Map<String, String> layout = ListToCSV.toMap("resource\\kmresource\\layout\\"+f.replace("test", "Layout").replace(".json", ".csv"), 2, 1);
             
             try(PrintWriter pw = CSVFileReadWrite.writerSJIS(f+".csv")){
@@ -34,18 +36,18 @@ public class MetaDataVisualize {
                 int i = 0;
                 while(!eof){
                     final int idx = i;
-                    String str = data.values().stream()
-                                    .map(d -> d.keySet())
-                                    .map(dk -> idx > dk.size()-1 ? "" : dk.toArray(new String[dk.size()])[idx])
-                                    .collect(Collectors.joining(","));
+                    List<String> rec = data.values().parallelStream()
+                                        .map(d -> d.keySet())
+                                        .map(dk -> idx > dk.size()-1 ? "" : dk.toArray(new String[dk.size()])[idx])
+                                        .collect(Collectors.toList());
                     
-                    eof = !Arrays.asList(str.split(",")).stream().filter(s -> !s.equals("")).findFirst().isPresent();
+                    //eof = !rec.stream().filter(s -> !s.equals("")).findFirst().isPresent();
                     
-                    pw.println(","+str);
+                    pw.println(","+String.join(",", rec));
                     i += 1;
                     
                     if(i % 1000 == 0){
-                        System.out.println(i+"件 "+str);
+                        System.out.println(i+"件 "+f+":"+rec);
                         eof = true;
                     }
                 }
