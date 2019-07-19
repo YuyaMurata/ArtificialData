@@ -8,10 +8,8 @@ package valid;
 import csv.CSVFileReadWrite;
 import csv.ListToCSV;
 import java.io.PrintWriter;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ForkJoinPool;
 import java.util.stream.Collectors;
 
 /**

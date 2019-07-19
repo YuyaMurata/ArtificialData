@@ -26,6 +26,7 @@ public class MetaSetAnonymous {
 
         MetaDataSet.files.values().stream().forEach(f -> {
             MetaDataDefine meta = new MetaDataDefine(f); //MetaDataSet.files.get("test_parts.json")
+            Anonymous.init();
             System.out.println(meta.name);
             
             Map<String, Map<String, Double>> data = meta.getData();

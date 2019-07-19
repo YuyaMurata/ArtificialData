@@ -18,6 +18,10 @@ import org.apache.commons.lang3.math.NumberUtils;
 public class Anonymous {
     private static MersenneTwisterFast rand = new MersenneTwisterFast();
     
+    public static void init(){
+        id = new HashMap();
+    }
+    
     //匿名化処理の分岐
     public static String A(String anonym, String key, String orig){
         if(anonym == null)
