@@ -31,7 +31,7 @@ import valid.MetaDataSet;
 public class CreateTestMaster {
 
     //
-    static Map<String, String> rule = ListToCSV.toMap("metaset\\国内データ項目匿名化案20190704.csv", 2, 29);
+    static Map<String, String> rule = ListToCSV.toMap("metaset\\データ項目匿名化ファイル.csv", 2, 7);
     static String path = "metaset\\anonymous\\";
     static String outpath = "metaset\\test\\";
 
@@ -121,7 +121,7 @@ public class CreateTestMaster {
     }
 
     private static MersenneTwisterFast rand = new MersenneTwisterFast();
-
+    
     public static void create(Map<String, TreeMap<Double, String>> d, int n) {
         Map<List<String>, String> dupCheck = new HashMap<>();
 
@@ -146,5 +146,5 @@ public class CreateTestMaster {
             });
         }
     }
-
+    
 }

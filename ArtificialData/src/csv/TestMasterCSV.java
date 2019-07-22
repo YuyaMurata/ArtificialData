@@ -18,14 +18,16 @@ import java.util.Map;
  * @author ZZ17807
  */
 public class TestMasterCSV {
-
+    
     private static String path = "metaset\\test\\test_master.csv";
-    private static List<String> header = new ArrayList();
+    private static List<String> mheader = new ArrayList();
     private static Map<String, List<String>> master = new HashMap();
 
     private static MersenneTwisterFast rand = new MersenneTwisterFast();
     private static TestMasterCSV instance = new TestMasterCSV();
-
+    
+    public Map<String, String> headers;
+    
     private TestMasterCSV() {
     }
     
@@ -33,13 +35,16 @@ public class TestMasterCSV {
         List<String> l = ListToCSV.toList(path);
 
         //header
-        header = Arrays.asList(l.get(0).split(","));
+        mheader = Arrays.asList(l.get(0).split(","));
         l.remove(0);
 
         //data
         l.stream().map(s -> s.split(",")).forEach(s -> {
             master.put(s[0], Arrays.asList(s));
         });
+        
+        //全ファイルのヘッダ情報
+        headers = ListToCSV.toMap("metaset\\データ項目匿名化ファイル.csv", 2, 1);
     }
 
     public static TestMasterCSV getInstance() {
@@ -53,7 +58,7 @@ public class TestMasterCSV {
 
     //列項目の抽出
     public String extract(String key, List<String> m) {
-        int i = header.indexOf(key.split("\\.")[1]);
+        int i = mheader.indexOf(key.split("\\.")[1]);
         if (i < 0) {
             return null;
         } else if (i == m.size()) {

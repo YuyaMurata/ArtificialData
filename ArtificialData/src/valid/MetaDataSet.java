@@ -23,6 +23,8 @@ public class MetaDataSet {
         
         System.out.println("Read Metafiles:");
         for(File f : p.listFiles()){
+            if(f.getAbsoluteFile().toString().contains(".txt"))
+                continue;
             files.put(f.getName(), f);
             System.out.println("  "+idx+":"+f.getName());
             idx++;

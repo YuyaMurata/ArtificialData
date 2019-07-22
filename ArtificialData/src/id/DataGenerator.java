@@ -60,8 +60,8 @@ public class DataGenerator {
         companyList.add("VWX");
         companyList.add("YZ.");
         NUM_COMPANY = companyList.size();
-        System.out.print("会社リスト\n  ");
-        System.out.println(companyList);
+        //System.out.print("会社リスト\n  ");
+        //System.out.println(companyList);
 
         //型リスト
         typeList.add("2");

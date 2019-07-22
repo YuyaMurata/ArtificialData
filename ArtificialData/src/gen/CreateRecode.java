@@ -20,15 +20,16 @@ import valid.MetaDataDefine;
  * @author zz17807
  */
 public class CreateRecode {
-
     private String name;
     private MetaDataDefine def;
+    public int origin;
     private static MersenneTwisterFast rand = new MersenneTwisterFast();
     private static TestMasterCSV TEST;
     
     public CreateRecode(File meta) {
         name = meta.getName();
         def = new MetaDataDefine(meta);
+        origin = def.total;
         TEST = TestMasterCSV.getInstance();
     }
 
@@ -49,7 +50,10 @@ public class CreateRecode {
         long start = System.currentTimeMillis();
         try (PrintWriter pw = CSVFileReadWrite.writerSJIS(outpath+f)) {
             //header
-            pw.println(def.getData().keySet().stream().collect(Collectors.joining(",")));
+            pw.println(def.getData().keySet().stream()
+                                .map(k -> k.split("\\.")[1].toUpperCase())
+                                .map(k -> TEST.headers.get(k))  // ヘッダーの日本語変換
+                                .collect(Collectors.joining(",")));
             
             //data
             IntStream.range(0, n).boxed().map(i -> get()).forEach(pw::println);
