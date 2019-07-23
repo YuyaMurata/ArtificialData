@@ -67,7 +67,7 @@ public class TestDataGenerator {
         
         //マスターデータの生成
         if(flg)CreateTestMaster.generate(1_000_000);
-        else CreateTestMaster.generate(n);
+        else CreateTestMaster.generate(n/100);
         TestMasterCSV.getInstance().settings();
         
         //Bussiness

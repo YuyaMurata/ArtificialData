@@ -40,6 +40,7 @@ public class CreateRecode {
         List<String> rec = def.getData().keySet().stream()
                 .map(k -> TEST.extract(k, m) == null ? def.getData(k, rand.nextInt(def.getRange(k))) : TEST.extract(k, m))
                 .map(rd -> rd == null ? "" : rd)
+                .map(rd -> rd.equals("") ? " " : rd)
                 .collect(Collectors.toList());
 
         return String.join(",", rec);
@@ -48,7 +49,7 @@ public class CreateRecode {
     public void create(int n, String outpath) {
         String f = def.name.toUpperCase().replace("JSON", "csv");
         long start = System.currentTimeMillis();
-        try (PrintWriter pw = CSVFileReadWrite.writerSJIS(outpath+f)) {
+        try (PrintWriter pw = CSVFileReadWrite.writer(outpath+f)) {
             //header
             pw.println(def.getData().keySet().stream()
                                 .map(k -> k.split("\\.")[1].toUpperCase())
