@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
  */
 public class GPSTable {
 
-    public static String gpsFile = "TEST_GPS.csv";
+    public static String gpsFile = "TEST_KOMTRAX_GPS.csv";
     private Integer numGPS = 250000000;
     private static String path = "resource\\root\\";
 
@@ -69,7 +69,7 @@ public class GPSTable {
                         } else if (l[1].equals("型式")) {
                             csvLine.add(TEST.extract("gps.typ", m) + TEST.extract("gps.syhk", m));
                         } else if (l[1].equals("小変形")) {
-                            csvLine.add("");
+                            csvLine.add(" ");
                         } else if (l[1].equals("機番")) {
                             csvLine.add(TEST.extract("gps.kiban", m));
                         } else {

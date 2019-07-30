@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
  * @author murata
  */
 public class SMRTable {
-    public static String smrFile = "TEST_SMR.csv";
+    public static String smrFile = "TEST_KOMTRAX_SMR.csv";
     private Integer numSMR = 250000000;
     private static String gpsFile = "TEST_GPS.csv";
 
@@ -56,7 +56,7 @@ public class SMRTable {
                     csvLine.add(l[3]);
                     csvLine.add(TEST.extract("gps.kisy", m)); // l[4]
                     csvLine.add(TEST.extract("gps.typ", m)+TEST.extract("gps.syhk", m)); //l[5]
-                    csvLine.add(""); //l[6]
+                    csvLine.add(" "); //l[6]
                     csvLine.add(TEST.extract("gps.kiban", m)); //l[7]
                     csvLine.add(l[8]);
                     csvLine.add(l[9]);

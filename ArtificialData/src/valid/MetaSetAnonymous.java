@@ -41,7 +41,7 @@ public class MetaSetAnonymous {
                 d.getValue().entrySet().stream().forEach(df -> {
                     anymdata.get(key).put(
                             Anonymous.A(rule.get(field.toUpperCase()),
-                                    field, df.getKey()),
+                                        field, df.getKey()),
                             df.getValue()
                     );
                 });

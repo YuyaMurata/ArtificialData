@@ -44,8 +44,8 @@ public class TestMasterCSV {
         });
         
         //全ファイルのヘッダ情報
-        //headers = ListToCSV.toMap("metaset\\データ項目匿名化ファイル.csv", 2, 1);
-        headers = ListToCSV.toMap("metaset\\国内データ項目匿名化案20190704.csv", 2, 1);
+        headers = ListToCSV.toMap("metaset\\データ項目匿名化ファイル.csv", 2, 1);
+        //headers = ListToCSV.toMap("metaset\\国内データ項目匿名化案20190704.csv", 2, 1);
     }
 
     public static TestMasterCSV getInstance() {
