@@ -9,6 +9,7 @@ import csv.CSVFileReadWrite;
 import csv.ListToCSV;
 import ec.util.MersenneTwisterFast;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -55,6 +56,7 @@ public class CreateTestMaster {
         //マスタに載せたいデータ項目
         rule.put("SYHK", "ID");
         rule.put("TYP", "ID");
+        rule.put("NNY_YMD", "ID");
 
         MetaDataSet.setFiles(path);
         MetaDataSet.files.values().stream().forEach(f -> {
@@ -120,7 +122,7 @@ public class CreateTestMaster {
 
         return (anonym.contains("ID") || anonym.contains("担当名") || anonym.contains("機種・機番"));
     }
-
+    
     private static MersenneTwisterFast rand = new MersenneTwisterFast();
     
     public static void create(Map<String, TreeMap<Double, String>> d, int n) {

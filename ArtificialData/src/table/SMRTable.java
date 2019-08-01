@@ -9,7 +9,6 @@ import csv.CSVFileReadWrite;
 import csv.TestMasterCSV;
 import id.DataGenerator;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -23,7 +22,7 @@ import java.util.stream.Collectors;
 public class SMRTable {
     public static String smrFile = "TEST_KOMTRAX_SMR.csv";
     private Integer numSMR = 250000000;
-    private static String gpsFile = "TEST_GPS.csv";
+    private static String gpsFile = "TEST_KOMTRAX_GPS.csv";
 
     public SMRTable() {
     }

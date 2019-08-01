@@ -6,7 +6,7 @@
 package main;
 
 import csv.TestMasterCSV;
-import gen.CreateRecode;
+import gen.CreateRecord;
 import gen.CreateTestMaster;
 import id.DataGenerator;
 import java.io.File;
@@ -73,7 +73,7 @@ public class TestDataGenerator {
         //Bussiness
         MetaDataSet.setFiles(META_PATH);
         MetaDataSet.files.values().stream().forEach(f -> {
-            CreateRecode rec = new CreateRecode(f);
+            CreateRecord rec = new CreateRecord(f);
             if(flg)
                 rec.create(rec.origin, OUTPATH);
             else

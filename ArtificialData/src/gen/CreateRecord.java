@@ -20,7 +20,7 @@ import valid.MetaDataDefine;
  *
  * @author zz17807
  */
-public class CreateRecode {
+public class CreateRecord {
 
     private String name;
     private MetaDataDefine def;
@@ -28,7 +28,7 @@ public class CreateRecode {
     private static MersenneTwisterFast rand = new MersenneTwisterFast();
     private static TestMasterCSV TEST;
 
-    public CreateRecode(File meta) {
+    public CreateRecord(File meta) {
         name = meta.getName();
         def = new MetaDataDefine(meta);
         origin = def.total;
