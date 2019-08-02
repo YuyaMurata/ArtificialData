@@ -23,7 +23,7 @@ public class MetaDataSet {
         
         System.out.println("Read Metafiles:");
         for(File f : p.listFiles()){
-            if(f.getAbsoluteFile().toString().contains(".txt"))
+            if(f.getAbsoluteFile().toString().contains(".txt") || f.getAbsoluteFile().toString().contains("test_km_all.json"))
                 continue;
             files.put(f.getName(), f);
             System.out.println("  "+idx+":"+f.getName());

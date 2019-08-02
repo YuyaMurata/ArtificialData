@@ -6,10 +6,12 @@
 package main;
 
 import csv.TestMasterCSV;
+import gen.CreateKMRecord;
 import gen.CreateRecord;
 import gen.CreateTestMaster;
 import id.DataGenerator;
 import java.io.File;
+import java.util.Map;
 import table.CustomerTable;
 import table.GPSTable;
 import table.InfoTable;
@@ -18,6 +20,7 @@ import table.PartsTable;
 import table.SMRTable;
 import table.SyaryoTable;
 import table.WorkTable;
+import valid.MapToJSON;
 import valid.MetaDataSet;
 
 /**
@@ -26,18 +29,20 @@ import valid.MetaDataSet;
  * @author 産総研・東工大OIL_2-2
  */
 public class TestDataGenerator {
+
     //Bussiness Dataのテーブルパス
     private static String BIS_LAYOUTPATH = "resource\\layout\\business\\";
     //IoT Dataのテーブルパス
     private static String IOT_LAYOUTPATH = "resource\\layout\\iot\\";
-    
+
     //メタデータのパス
     private static String META_PATH = "metaset\\anonymous\\";
     //出力パス
+    //private static String OUTPATH = "G:\\test\\data\\";
     private static String OUTPATH = "G:\\test\\data\\";
 
     public static void main(String[] args) {
-        
+
         //旧データ生成
         //システムテスト用 customer=100000 syaryo(N,機種)=(1000000, 676(MAX)) order=10000000 work=20000000 parts=30000000 sensor(GPS,SMR)=250000000
         //性能  testdata file=98.7GB  generate time=2h10m  json time= ?s  memory=? json file=?
@@ -48,61 +53,64 @@ public class TestDataGenerator {
         //確認用　c=10 s=1000 機種=10 o=10000 w=10000 p=10000 sensor=10000
         //性能  testdata file=38MB  generate time=4s  json time= 9s  memory=600MB json file=34MB
         //generate(10, 1000, 10, 10000, 10000, 10000, 10000, 10000);
-        
         //共同研究用データ生成
         //true = オリジナルデータサイズ
         //false = 小規模データサイズ
-        metagen(true);
+        metagen(false);
     }
 
     //共同研究用テストデータ生成
     private static void metagen(Boolean flg) {
         int n = 1000;
-        
+
         //出力フォルダの設定
         File file = new File(OUTPATH);
         if (!file.exists()) {
             file.mkdirs();
         }
-        
+
         //マスターデータの生成
-        if(flg)CreateTestMaster.generate(1_000_000);
-        else CreateTestMaster.generate(n/100);
+        if (flg) {
+            CreateTestMaster.generate(1_000_000);
+        } else {
+            CreateTestMaster.generate(n / 100);
+        }
         TestMasterCSV.getInstance().settings();
-        
+
         //Bussiness
-        MetaDataSet.setFiles(META_PATH);
+        /*MetaDataSet.setFiles(META_PATH);
         MetaDataSet.files.values().stream().forEach(f -> {
             CreateRecord rec = new CreateRecord(f);
-            if(flg)
+            if (flg) {
                 rec.create(rec.origin, OUTPATH);
-            else
+            } else {
                 rec.create(n, OUTPATH);
-        });
-        
+            }
+        });*/
+
         //IoT
-        InfoTable table = new InfoTable(OUTPATH);
-        DataGenerator dataGen = new DataGenerator();
-        if(flg){
-            new GPSTable(25_000_000).createGPSTable(dataGen, table.getLayout(IOT_LAYOUTPATH + "Layout_GPS.csv"), table.getSyaryo());
-            new SMRTable(25_000_000).createSMRTable(dataGen, table.getLayout(IOT_LAYOUTPATH + "Layout_SMR.csv"));
-        }else{
-            new GPSTable(n).createGPSTable(dataGen, table.getLayout(IOT_LAYOUTPATH + "Layout_GPS.csv"), table.getSyaryo());
-            new SMRTable(n).createSMRTable(dataGen, table.getLayout(IOT_LAYOUTPATH + "Layout_SMR.csv"));
-        }
+        Map<String, Integer> km = new MapToJSON().toMap(META_PATH + "test_km_all.json");
+        km.entrySet().stream().forEach(f -> {
+            CreateKMRecord rec = new CreateKMRecord();
+            if (flg) {
+                rec.create(f.getValue(), OUTPATH, f.getKey());
+            } else {
+                rec.create(n, OUTPATH, f.getKey());
+            }
+        });
     }
 
     //旧テストデータ生成
     private static void generate(int customer, int syaryo, int syaryo_kisy, int order, int work, int parts, int gps, int smr) {
         DataGenerator dataGen = new DataGenerator();
-        
+
         //出力フォルダの設定
         InfoTable table = new InfoTable(OUTPATH);
         File file = new File(OUTPATH);
         if (!file.exists()) {
             file.mkdirs();
         }
-        
+
         //テストデータ生成
         new CustomerTable(customer).createCustTable(dataGen, "resource\\個人情報.csv", table.getLayout(BIS_LAYOUTPATH + "Layout_customer.csv"));
         new SyaryoTable(syaryo, syaryo_kisy).createSyaryoTable(dataGen, table.getLayout(BIS_LAYOUTPATH + "Layout_syaryo.csv"));
