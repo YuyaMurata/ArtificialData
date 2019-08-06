@@ -13,6 +13,7 @@ import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -76,9 +77,8 @@ public class CreateKMRecord {
             int total = 0;
             while (total < n) {
                 List<List<String>> rec = get(data);
-                n += rec.size();
-                
-                rec.stream().forEach(pw::println);
+                total += rec.size();
+                rec.stream().map(r -> String.join(",", r)).forEach(pw::println);
             }
         }
 
@@ -105,8 +105,11 @@ public class CreateKMRecord {
 
     private static String selector(String data, String k, String st, int i, List<String> m) {
         String s = "";
-        if (TEST.extract(k, m) != null) {
-            s = TEST.extract(k, m);
+        
+        System.out.println(data+","+k+","+st+","+i+","+TEST.extract(k.toLowerCase(), m)+","+KMLAYOUT.get(data).get(k));
+        
+        if (TEST.extract(k.toLowerCase(), m) != null) {
+            s = TEST.extract(k.toLowerCase(), m);
         } else if (KMLAYOUT.get(data).get(k).contains("時間")) {
             s = date(st, i);
         } else if (KMLAYOUT.get(data).get(k).contains("フラグ")

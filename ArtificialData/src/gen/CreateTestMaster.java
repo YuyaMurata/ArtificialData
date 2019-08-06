@@ -40,11 +40,12 @@ public class CreateTestMaster {
     public static void generate(int n) {
         //集約データチェック
         Map<String, TreeMap<Double, String>> roullet = aggregate();
-        roullet.entrySet().stream()
+        /*roullet.entrySet().stream()
                 .map(a -> a.getKey() + ":" + a.getValue().size()
                 + " - sample(" + a.getValue().entrySet().stream().limit(10).map(av -> av.getValue() + "(" + String.format("%.1f", av.getKey()) + ")").collect(Collectors.toList()) + ")")
                 .forEach(System.out::println);
-
+        */
+        
         //マスタデータ生成
         create(roullet, n);
     }

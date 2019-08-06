@@ -59,7 +59,13 @@ public class TestMasterCSV {
 
     //列項目の抽出
     public String extract(String key, List<String> m) {
-        int i = mheader.indexOf(key.split("\\.")[1]);
+        int i;
+        if(key.contains("."))
+            i = mheader.indexOf(key.split("\\.")[1]);
+        else
+            i = mheader.indexOf(key);
+        
+        
         if (i < 0) {
             return null;
         } else if (i == m.size()) {
