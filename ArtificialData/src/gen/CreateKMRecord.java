@@ -119,6 +119,8 @@ public class CreateKMRecord {
             s = String.valueOf(rand.nextInt(2));
         } else if (KMLAYOUT.get(data).get(k).equals("メーカーコード")) {
             s = "0001";
+        } else if (KMLAYOUT.get(data).get(k).contains("SMR進捗")) {
+            //進捗を増やす仕組み
         } else if (KMLAYOUT.get(data).get(k).contains("カウント")) {
             s = String.valueOf(rand.nextInt(36) * 16 * 60 * 2);
         } else if (KMLAYOUT.get(data).get(k).contains("ユニット")) {
