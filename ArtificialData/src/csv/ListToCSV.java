@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -45,7 +46,9 @@ public class ListToCSV {
                                     .filter(s -> !s[k].equals(""))
                                     .collect(Collectors.toMap(
                                             s -> s[k], 
-                                            s -> s[v]
+                                            s -> s[v],
+                                            (e1, e2) -> e2,
+                                            LinkedHashMap::new
                                     ));
         
         return map;
