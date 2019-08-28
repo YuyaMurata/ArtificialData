@@ -29,7 +29,8 @@ import valid.MetaDataSet;
  * @author 産総研・東工大OIL_2-2
  */
 public class TestDataGenerator {
-
+    
+    //旧テストデータ生成
     //Bussiness Dataのテーブルパス
     private static String BIS_LAYOUTPATH = "resource\\layout\\business\\";
     //IoT Dataのテーブルパス
