@@ -38,8 +38,8 @@ public class TestDataGenerator {
     //メタデータのパス
     private static String META_PATH = "metaset\\anonymous\\";
     //出力パス
-    //private static String OUTPATH = "G:\\test\\data\\";
-    private static String OUTPATH = "D:\\test\\data\\";
+    private static String OUTPATH = "G:\\test\\data\\";
+    //private static String OUTPATH = "D:\\test\\data\\";
 
     public static void main(String[] args) {
 
@@ -56,7 +56,7 @@ public class TestDataGenerator {
         //共同研究用データ生成
         //true = オリジナルデータサイズ
         //false = 小規模データサイズ
-        metagen(false);
+        metagen(true);
     }
 
     //共同研究用テストデータ生成

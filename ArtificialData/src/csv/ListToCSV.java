@@ -41,6 +41,9 @@ public class ListToCSV {
     public static Map<String, String> toMap(String csv, int k, int v){
         List<String> l = toList(csv);
         
+        //ヘッダ削除
+        l.remove(0);
+        
         Map<String, String> map = l.stream()
                                     .map(s -> s.split(","))
                                     .filter(s -> !s[k].equals(""))

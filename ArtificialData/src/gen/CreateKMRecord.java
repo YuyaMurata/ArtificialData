@@ -47,6 +47,7 @@ public class CreateKMRecord {
         //masterの選択
         List<String> m = TEST.get();
         if (map.get(m.toString()) == null) {
+            //KOMTRAXの初期値設定
             String[] status = new String[]{(TEST.extract("nny_ymd", m)), String.valueOf(rand.nextInt(MAX_TERM))};
             map.put(m.toString(), status);
         }
@@ -54,7 +55,6 @@ public class CreateKMRecord {
         String[] status = map.get(m.toString());
         List<List<String>> rec = IntStream.range(0, Integer.valueOf(status[1])).boxed()
                 .map(i -> KMLAYOUT.get(data).keySet().stream()
-                .filter(k -> !k.contains("name"))
                 .map(k -> selector(data, k, status[0], i, m))
                 .collect(Collectors.toList()))
                 .collect(Collectors.toList());
@@ -104,7 +104,7 @@ public class CreateKMRecord {
     private static String selector(String data, String k, String st, int i, List<String> m) {
         String s = "";
 
-        System.out.println(data + "," + k + "," + st + "," + i + "," + TEST.extract(k.toLowerCase(), m) + "," + KMLAYOUT.get(data).get(k));
+        //System.out.println(data + "," + k + "," + st + "," + i + "," + TEST.extract(k.toLowerCase(), m) + "," + KMLAYOUT.get(data).get(k));
 
         if (TEST.extract(k.toLowerCase(), m) != null) {
             s = TEST.extract(k.toLowerCase(), m);
@@ -125,7 +125,6 @@ public class CreateKMRecord {
                 acmsmr.put(m, acmsmr.get(m)+rand.nextInt(36)*60);
             
             s = acmsmr.get(m).toString();
-            
         } else if (KMLAYOUT.get(data).get(k).contains("カウント")) {
             s = String.valueOf(rand.nextInt(36) * 16 * 60 * 2);
         } else if (KMLAYOUT.get(data).get(k).contains("ユニット")) {
@@ -139,8 +138,11 @@ public class CreateKMRecord {
         } else if (KMLAYOUT.get(data).get(k).contains("場所")) {
             s = "";
         }
+        
+        if(s.equals(""))
+            s = " ";
 
-        System.out.println(k.toLowerCase() + ":" + s);
+        //System.out.println(k.toLowerCase() + ":" + s);
 
         return s;
     }
