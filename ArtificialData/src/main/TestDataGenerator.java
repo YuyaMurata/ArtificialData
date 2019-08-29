@@ -57,7 +57,7 @@ public class TestDataGenerator {
         //共同研究用データ生成
         //true = オリジナルデータサイズ
         //false = 小規模データサイズ
-        metagen(true);
+        metagen(false);
     }
 
     //共同研究用テストデータ生成
@@ -79,7 +79,7 @@ public class TestDataGenerator {
         TestMasterCSV.getInstance().settings();
 
         //Bussiness
-        MetaDataSet.setFiles(META_PATH);
+        /*MetaDataSet.setFiles(META_PATH);
         MetaDataSet.files.values().stream().forEach(f -> {
             CreateRecord rec = new CreateRecord(f);
             if (flg) {
@@ -87,14 +87,14 @@ public class TestDataGenerator {
             } else {
                 rec.create(n, OUTPATH);
             }
-        });
+        });*/
 
         //IoT
-        Map<String, Integer> km = new MapToJSON().toMap(META_PATH + "test_km_all.json");
+        Map<String, Double> km = new MapToJSON().toMap(META_PATH + "test_km_all.json");
         km.entrySet().stream().forEach(f -> {
             CreateKMRecord rec = new CreateKMRecord();
             if (flg) {
-                rec.create(f.getValue(), OUTPATH, f.getKey());
+                rec.create(f.getValue().intValue(), OUTPATH, f.getKey());
             } else {
                 rec.create(n, OUTPATH, f.getKey());
             }
