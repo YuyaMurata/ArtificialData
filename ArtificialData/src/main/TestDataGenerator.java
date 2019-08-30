@@ -39,8 +39,8 @@ public class TestDataGenerator {
     //メタデータのパス
     private static String META_PATH = "metaset\\anonymous\\";
     //出力パス
-    private static String OUTPATH = "G:\\test\\data\\";
-    //private static String OUTPATH = "D:\\test\\data\\";
+    //private static String OUTPATH = "G:\\test\\data\\";
+    private static String OUTPATH = "D:\\test\\data\\";
 
     public static void main(String[] args) {
 
@@ -57,7 +57,7 @@ public class TestDataGenerator {
         //共同研究用データ生成
         //true = オリジナルデータサイズ
         //false = 小規模データサイズ
-        metagen(false);
+        metagen(true);
     }
 
     //共同研究用テストデータ生成
@@ -79,7 +79,7 @@ public class TestDataGenerator {
         TestMasterCSV.getInstance().settings();
 
         //Bussiness
-        /*MetaDataSet.setFiles(META_PATH);
+        MetaDataSet.setFiles(META_PATH);
         MetaDataSet.files.values().stream().forEach(f -> {
             CreateRecord rec = new CreateRecord(f);
             if (flg) {
@@ -87,7 +87,7 @@ public class TestDataGenerator {
             } else {
                 rec.create(n, OUTPATH);
             }
-        });*/
+        });
 
         //IoT
         Map<String, Double> km = new MapToJSON().toMap(META_PATH + "test_km_all.json");
