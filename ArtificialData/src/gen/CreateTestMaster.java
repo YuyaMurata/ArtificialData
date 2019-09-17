@@ -9,8 +9,8 @@ import csv.CSVFileReadWrite;
 import csv.ListToCSV;
 import ec.util.MersenneTwisterFast;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -19,13 +19,11 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import valid.MetaDataDefine;
 import valid.MetaDataSet;
 
 /**
- * テストデータ生成ためのマスター作成
- * ※生成前に作成しないと動かない
+ * テストデータ生成ためのマスター作成 ※生成前に作成しないと動かない
  *
  * @author ZZ17807
  */
@@ -44,8 +42,8 @@ public class CreateTestMaster {
                 .map(a -> a.getKey() + ":" + a.getValue().size()
                 + " - sample(" + a.getValue().entrySet().stream().limit(10).map(av -> av.getValue() + "(" + String.format("%.1f", av.getKey()) + ")").collect(Collectors.toList()) + ")")
                 .forEach(System.out::println);
-        */
-        
+         */
+
         //マスタデータ生成
         create(roullet, n);
     }
@@ -123,17 +121,40 @@ public class CreateTestMaster {
 
         return (anonym.contains("ID") || anonym.contains("担当名") || anonym.contains("機種・機番"));
     }
-    
+
+    static Map<List<String>, String> dupCheck = new HashMap<>();
+    private static Boolean duplicateCheck(List<String> rec, List<String> header) {
+        //重複排除項目
+        List<Integer> duplist = Arrays.asList(new Integer[]{
+            header.indexOf("kisy"),
+            header.indexOf("typ"),
+            header.indexOf("syhk"),
+            header.indexOf("kiban"),
+            header.indexOf("hy_kkykcd")
+        });
+        List<String> dupkey = duplist.stream().map(i -> rec.get(i)).collect(Collectors.toList());
+
+        if (dupCheck.get(dupkey) == null) {
+            dupCheck.put(dupkey, "1");
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     private static MersenneTwisterFast rand = new MersenneTwisterFast();
-    
+
     public static void create(Map<String, TreeMap<Double, String>> d, int n) {
-        Map<List<String>, String> dupCheck = new HashMap<>();
 
-        try (PrintWriter pw = CSVFileReadWrite.writerSJIS(outpath+"test_master.csv")) {
+        try (PrintWriter pw = CSVFileReadWrite.writerSJIS(outpath + "test_master.csv")) {
             //header
-            pw.println("No.," + String.join(",", d.keySet()));
-
-            IntStream.range(0, n).forEach(i -> {
+            List<String> header = new ArrayList<>();
+            header.add("No.");
+            header.addAll(d.keySet());
+            pw.println(String.join(",", header));
+            
+            long i = 0L;
+            while(i < n){
                 //record
                 List<String> rec = new ArrayList<>();
                 rec.add(String.valueOf(i));
@@ -143,12 +164,12 @@ public class CreateTestMaster {
                         .collect(Collectors.toList()));
 
                 //重複しない場合のみ
-                if (dupCheck.get(rec) == null) {
+                if (duplicateCheck(rec, header)) {
                     pw.println(String.join(",", rec));
-                    dupCheck.put(rec, "");
+                    i++;
                 }
-            });
+            };
         }
     }
-    
+
 }

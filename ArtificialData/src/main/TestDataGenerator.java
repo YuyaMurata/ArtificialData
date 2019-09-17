@@ -79,7 +79,7 @@ public class TestDataGenerator {
         TestMasterCSV.getInstance().settings();
 
         //Bussiness
-        MetaDataSet.setFiles(META_PATH);
+        /*MetaDataSet.setFiles(META_PATH);
         MetaDataSet.files.values().stream().forEach(f -> {
             CreateRecord rec = new CreateRecord(f);
             if (flg) {
@@ -87,7 +87,7 @@ public class TestDataGenerator {
             } else {
                 rec.create(n, OUTPATH);
             }
-        });
+        });*/
 
         //IoT
         Map<String, Double> km = new MapToJSON().toMap(META_PATH + "test_km_all.json");
