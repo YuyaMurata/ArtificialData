@@ -32,9 +32,9 @@ public class TestDataGenerator {
     
     //旧テストデータ生成
     //Bussiness Dataのテーブルパス
-    private static String BIS_LAYOUTPATH = "resource\\layout\\business\\";
+    //private static String BIS_LAYOUTPATH = "resource\\layout\\business\\";
     //IoT Dataのテーブルパス
-    private static String IOT_LAYOUTPATH = "resource\\layout\\iot\\";
+    //private static String IOT_LAYOUTPATH = "resource\\layout\\iot\\";
 
     //メタデータのパス
     private static String META_PATH = "metaset\\anonymous\\";
@@ -54,6 +54,7 @@ public class TestDataGenerator {
         //確認用　c=10 s=1000 機種=10 o=10000 w=10000 p=10000 sensor=10000
         //性能  testdata file=38MB  generate time=4s  json time= 9s  memory=600MB json file=34MB
         //generate(10, 1000, 10, 10000, 10000, 10000, 10000, 10000);
+        
         //共同研究用データ生成
         //true = オリジナルデータサイズ
         //false = 小規模データサイズ
@@ -79,7 +80,7 @@ public class TestDataGenerator {
         TestMasterCSV.getInstance().settings();
 
         //Bussiness
-        /*MetaDataSet.setFiles(META_PATH);
+        MetaDataSet.setFiles(META_PATH);
         MetaDataSet.files.values().stream().forEach(f -> {
             CreateRecord rec = new CreateRecord(f);
             if (flg) {
@@ -87,7 +88,7 @@ public class TestDataGenerator {
             } else {
                 rec.create(n, OUTPATH);
             }
-        });*/
+        });
 
         //IoT
         Map<String, Double> km = new MapToJSON().toMap(META_PATH + "test_km_all.json");
@@ -102,7 +103,7 @@ public class TestDataGenerator {
     }
 
     //旧テストデータ生成
-    private static void generate(int customer, int syaryo, int syaryo_kisy, int order, int work, int parts, int gps, int smr) {
+    /*private static void generate(int customer, int syaryo, int syaryo_kisy, int order, int work, int parts, int gps, int smr) {
         DataGenerator dataGen = new DataGenerator();
 
         //出力フォルダの設定
@@ -120,5 +121,5 @@ public class TestDataGenerator {
         new PartsTable(parts).createPartsTable(dataGen, table.getLayout(BIS_LAYOUTPATH + "Layout_parts.csv"), table.getSBN());
         new GPSTable(gps).createGPSTable(dataGen, table.getLayout(IOT_LAYOUTPATH + "Layout_GPS.csv"), table.getSyaryo());
         new SMRTable(smr).createSMRTable(dataGen, table.getLayout(IOT_LAYOUTPATH + "Layout_SMR.csv"));
-    }
+    }*/
 }

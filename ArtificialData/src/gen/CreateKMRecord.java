@@ -35,7 +35,9 @@ public class CreateKMRecord {
         }
     };
     private static MersenneTwisterFast rand = new MersenneTwisterFast();
-    private static int MAX_TERM = 3000;
+    
+    private static int MIN_TERM = 1000;
+    private static int MAX_TERM = 2000;
 
     public CreateKMRecord() {
         TEST = TestMasterCSV.getInstance();
@@ -48,7 +50,7 @@ public class CreateKMRecord {
         List<String> m = TEST.get();
         if (map.get(m.toString()) == null) {
             //KOMTRAXの初期値設定
-            String[] status = new String[]{(TEST.extract("nny_ymd", m)), String.valueOf(rand.nextInt(MAX_TERM))};
+            String[] status = new String[]{(TEST.extract("nny_ymd", m)), String.valueOf(MIN_TERM+rand.nextInt(MAX_TERM))};
             map.put(m.toString(), status);
         }
 
