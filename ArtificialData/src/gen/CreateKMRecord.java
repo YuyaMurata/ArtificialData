@@ -110,16 +110,16 @@ public class CreateKMRecord {
 
         if (TEST.extract(k.toLowerCase(), m) != null) {
             s = TEST.extract(k.toLowerCase(), m);
-        } else if (KMLAYOUT.get(data).get(k).contains("時間")) {
+        } else if (KMLAYOUT.get(data).get(k).contains("_TIME")) {
             s = date(st, i);
-        } else if (KMLAYOUT.get(data).get(k).contains("フラグ")
-                || KMLAYOUT.get(data).get(k).contains("ステータス")
-                || KMLAYOUT.get(data).get(k).contains("エンジン")
-                || KMLAYOUT.get(data).get(k).contains("区分")) {
+        } else if (KMLAYOUT.get(data).get(k).contains("FLAG")
+                || KMLAYOUT.get(data).get(k).contains("STATUS")
+                || KMLAYOUT.get(data).get(k).contains("ENGINE")
+                || KMLAYOUT.get(data).get(k).contains("EVENT")) {
             s = String.valueOf(rand.nextInt(2));
-        } else if (KMLAYOUT.get(data).get(k).equals("メーカーコード")) {
+        } else if (KMLAYOUT.get(data).get(k).equals("MAKER_CODE")) {
             s = "0001";
-        } else if (KMLAYOUT.get(data).get(k).contains("SMR進捗")) {
+        } else if (KMLAYOUT.get(data).get(k).contains("SMR_VALUE")) {
             //進捗を増やす仕組み
             if(acmsmr.get(m) == null)
                 acmsmr.put(m, rand.nextInt(1000)*60);
@@ -127,17 +127,17 @@ public class CreateKMRecord {
                 acmsmr.put(m, acmsmr.get(m)+rand.nextInt(36)*60);
             
             s = acmsmr.get(m).toString();
-        } else if (KMLAYOUT.get(data).get(k).contains("カウント")) {
+        } else if (KMLAYOUT.get(data).get(k).contains("COUNT")) {
             s = String.valueOf(rand.nextInt(36) * 16 * 60 * 2);
-        } else if (KMLAYOUT.get(data).get(k).contains("ユニット")) {
+        } else if (KMLAYOUT.get(data).get(k).contains("UNIT")) {
             s = String.valueOf(2);
-        } else if (KMLAYOUT.get(data).get(k).contains("マップ")) {
+        } else if (KMLAYOUT.get(data).get(k).contains("MAP")) {
             s = String.valueOf(rand.nextInt(36) / 4 * 16 * 60 * 2);
-        } else if (KMLAYOUT.get(data).get(k).contains("経度")) {
+        } else if (KMLAYOUT.get(data).get(k).contains("LATITUDE")) {
             s = latlong(k);
-        } else if (KMLAYOUT.get(data).get(k).contains("緯度")) {
+        } else if (KMLAYOUT.get(data).get(k).contains("LONGITUDE")) {
             s = latlong(k);
-        } else if (KMLAYOUT.get(data).get(k).contains("場所")) {
+        } else if (KMLAYOUT.get(data).get(k).contains("PLACE")) {
             s = "";
         }
         

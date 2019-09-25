@@ -78,7 +78,7 @@ public class Anonymous {
 
     //ハッシュ
     public static String H(String orig) {
-        return "SVid." + orig.hashCode();
+        return "SVid" + orig.hashCode();
     }
 
     //ランダム数字

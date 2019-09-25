@@ -30,20 +30,23 @@ import valid.MetaDataSet;
 public class CreateTestMaster {
 
     //
-    static Map<String, String> rule = ListToCSV.toMap("metaset\\データ項目匿名化ファイル.csv", 2, 7);
-    //static Map<String, String> rule = ListToCSV.toMap("metaset\\国内データ項目匿名化案20190704.csv", 2, 29);
-    static String path = "metaset\\anonymous\\";
-    static String outpath = "metaset\\test\\";
+    static Map<String, String> rule;
+    static String path;
+    static String outpath;
+    
+    public static String getFile(){
+        return outpath + "test_master.csv";
+    }
+    
+    public static void generate(String rulefile, String metapath, String out, int n) {
+        //パス設定
+        rule = ListToCSV.toMap(rulefile, 2, 7);
+        path = metapath;
+        outpath = out;
 
-    public static void generate(int n) {
         //集約データチェック
         Map<String, TreeMap<Double, String>> roullet = aggregate();
-        /*roullet.entrySet().stream()
-                .map(a -> a.getKey() + ":" + a.getValue().size()
-                + " - sample(" + a.getValue().entrySet().stream().limit(10).map(av -> av.getValue() + "(" + String.format("%.1f", av.getKey()) + ")").collect(Collectors.toList()) + ")")
-                .forEach(System.out::println);
-         */
-
+        
         //マスタデータ生成
         create(roullet, n);
     }

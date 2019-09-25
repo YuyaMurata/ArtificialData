@@ -36,11 +36,10 @@ public class TestDataGenerator {
     //IoT Dataのテーブルパス
     //private static String IOT_LAYOUTPATH = "resource\\layout\\iot\\";
 
-    //メタデータのパス
+    //データ生成用パス
+    private static String RULE_FILE = "metaset\\データ項目匿名化ファイル.csv";
     private static String META_PATH = "metaset\\anonymous\\";
-    //出力パス
-    //private static String OUTPATH = "G:\\test\\data\\";
-    private static String OUTPATH = "D:\\test\\data\\";
+    private static String OUTPATH = "data\\";
 
     public static void main(String[] args) {
 
@@ -58,7 +57,7 @@ public class TestDataGenerator {
         //共同研究用データ生成
         //true = オリジナルデータサイズ
         //false = 小規模データサイズ
-        metagen(true);
+        metagen(false);
     }
 
     //共同研究用テストデータ生成
@@ -73,11 +72,11 @@ public class TestDataGenerator {
 
         //マスターデータの生成
         if (flg) {
-            CreateTestMaster.generate(1_000_000);
+            CreateTestMaster.generate(RULE_FILE, META_PATH, OUTPATH, 1_000_000);
         } else {
-            CreateTestMaster.generate(n / 100);
+            CreateTestMaster.generate(RULE_FILE, META_PATH, OUTPATH, n / 100);
         }
-        TestMasterCSV.getInstance().settings();
+        TestMasterCSV.getInstance().settings(RULE_FILE);
 
         //Bussiness
         MetaDataSet.setFiles(META_PATH);

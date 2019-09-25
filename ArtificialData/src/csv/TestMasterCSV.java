@@ -6,6 +6,7 @@
 package csv;
 
 import ec.util.MersenneTwisterFast;
+import gen.CreateTestMaster;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -18,7 +19,6 @@ import java.util.Map;
  */
 public class TestMasterCSV {
     
-    private static String path = "metaset\\test\\test_master.csv";
     private static List<String> mheader = new ArrayList();
     private static Map<String, List<String>> master = new HashMap();
 
@@ -30,8 +30,8 @@ public class TestMasterCSV {
     private TestMasterCSV() {
     }
     
-    public void settings(){
-        List<String> l = ListToCSV.toList(path);
+    public void settings(String rulefile){
+        List<String> l = ListToCSV.toList(CreateTestMaster.getFile());
 
         //header
         mheader = Arrays.asList(l.get(0).split(","));
@@ -43,8 +43,7 @@ public class TestMasterCSV {
         });
         
         //全ファイルのヘッダ情報
-        headers = ListToCSV.toMap("metaset\\データ項目匿名化ファイル.csv", 2, 1);
-        //headers = ListToCSV.toMap("metaset\\国内データ項目匿名化案20190704.csv", 2, 1);
+        headers = ListToCSV.toMap(rulefile, 2, 1);
     }
 
     public static TestMasterCSV getInstance() {
