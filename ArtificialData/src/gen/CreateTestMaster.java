@@ -35,7 +35,7 @@ public class CreateTestMaster {
     static String outpath;
     
     public static String getFile(){
-        return outpath + "test_master.csv";
+        return outpath + "TEST_MASTER.csv";
     }
     
     public static void generate(String rulefile, String metapath, String out, int n) {

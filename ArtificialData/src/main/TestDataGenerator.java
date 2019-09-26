@@ -39,7 +39,7 @@ public class TestDataGenerator {
     //データ生成用パス
     private static String RULE_FILE = "metaset\\データ項目匿名化ファイル.csv";
     private static String META_PATH = "metaset\\anonymous\\";
-    private static String OUTPATH = "data\\";
+    private static String OUTPATH = "H:\\test\\data\\";
 
     public static void main(String[] args) {
 
@@ -57,7 +57,7 @@ public class TestDataGenerator {
         //共同研究用データ生成
         //true = オリジナルデータサイズ
         //false = 小規模データサイズ
-        metagen(false);
+        metagen(true);
     }
 
     //共同研究用テストデータ生成
