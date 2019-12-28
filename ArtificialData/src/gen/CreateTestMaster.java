@@ -62,7 +62,7 @@ public class CreateTestMaster {
 
         MetaDataSet.setFiles(path);
         MetaDataSet.files.values().stream().forEach(f -> {
-            MetaDataDefine meta = new MetaDataDefine(f); //MetaDataSet.files.get("test_parts.json")
+            MetaDataDefine meta = new MetaDataDefine(f); 
             System.out.println(meta.name);
 
             Map<String, Map<String, Double>> data = meta.getData();

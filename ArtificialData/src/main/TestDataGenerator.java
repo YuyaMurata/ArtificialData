@@ -94,9 +94,9 @@ public class TestDataGenerator {
         km.entrySet().stream().forEach(f -> {
             CreateKMRecord rec = new CreateKMRecord();
             if (flg) {
-                rec.create(f.getValue().intValue(), OUTPATH, f.getKey());
+                rec.create(OUTPATH, f.getKey());
             } else {
-                rec.create(n, OUTPATH, f.getKey());
+                rec.create(OUTPATH, f.getKey());
             }
         });
     }

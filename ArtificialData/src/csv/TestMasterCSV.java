@@ -54,6 +54,10 @@ public class TestMasterCSV {
     public List<String> get() {
         return master.get(String.valueOf(rand.nextInt(master.size())));
     }
+    
+    public List<String> get(int i) {
+        return master.get(String.valueOf(i));
+    }
 
     //列項目の抽出
     public String extract(String key, List<String> m) {

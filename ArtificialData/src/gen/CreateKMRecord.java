@@ -12,6 +12,7 @@ import ec.util.MersenneTwisterFast;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -35,8 +36,6 @@ public class CreateKMRecord {
         }
     };
     private static MersenneTwisterFast rand = new MersenneTwisterFast();
-    
-    private static int MIN_TERM = 1000;
     private static int MAX_TERM = 2000;
 
     public CreateKMRecord() {
@@ -45,12 +44,11 @@ public class CreateKMRecord {
 
     static Map<String, String[]> map = new HashMap();
 
-    public List<List<String>> get(String data) {
+    public List<List<String>> get(List<String> m, int num, String data) {
         //masterの選択
-        List<String> m = TEST.get();
         if (map.get(m.toString()) == null) {
             //KOMTRAXの初期値設定
-            String[] status = new String[]{(TEST.extract("nny_ymd", m)), String.valueOf(MIN_TERM+rand.nextInt(MAX_TERM))};
+            String[] status = new String[]{(TEST.extract("nny_ymd", m)), String.valueOf(num)};
             map.put(m.toString(), status);
         }
 
@@ -64,7 +62,7 @@ public class CreateKMRecord {
         return rec;
     }
 
-    public void create(int n, String outpath, String data) {
+    public void create(String outpath, String data) {
         long start = System.currentTimeMillis();
         String f = "TEST_KOMTRAX_" + data + ".csv";
         try (PrintWriter pw = CSVFileReadWrite.writer(outpath + f)) {
@@ -73,11 +71,14 @@ public class CreateKMRecord {
                     .map(k -> k.toUpperCase())
                     .collect(Collectors.toList());
             pw.println(String.join(",", header));
+            List<String> m = new ArrayList();
             int total = 0;
-            while (total < n) {
-                List<List<String>> rec = get(data);
-                total += rec.size();
+            while ((m = TEST.get(total)) != null) {
+                int num = rand.nextInt(MAX_TERM);
+                List<List<String>> rec = get(m, num, data);
                 rec.stream().map(r -> String.join(",", r)).forEach(pw::println);
+                
+                total++;
             }
         }
 
@@ -103,14 +104,15 @@ public class CreateKMRecord {
     static Integer smr = 0;
 
     private static Map<Object, Integer> acmsmr = new HashMap<>();
+
     private static String selector(String data, String k, String st, int i, List<String> m) {
         String s = "";
 
         //System.out.println(data + "," + k + "," + st + "," + i + "," + TEST.extract(k.toLowerCase(), m) + "," + KMLAYOUT.get(data).get(k));
-
         if (TEST.extract(k.toLowerCase(), m) != null) {
             s = TEST.extract(k.toLowerCase(), m);
-        } else if (KMLAYOUT.get(data).get(k).contains("_TIME")) {
+        } else if (KMLAYOUT.get(data).get(k).contains("_TIME")
+                || KMLAYOUT.get(data).get(k).contains("_DATE")) {
             s = date(st, i);
         } else if (KMLAYOUT.get(data).get(k).contains("FLAG")
                 || KMLAYOUT.get(data).get(k).contains("STATUS")
@@ -121,11 +123,12 @@ public class CreateKMRecord {
             s = "0001";
         } else if (KMLAYOUT.get(data).get(k).contains("SMR_VALUE")) {
             //進捗を増やす仕組み
-            if(acmsmr.get(m) == null)
-                acmsmr.put(m, rand.nextInt(1000)*60);
-            else
-                acmsmr.put(m, acmsmr.get(m)+rand.nextInt(36)*60);
-            
+            if (acmsmr.get(m) == null) {
+                acmsmr.put(m, rand.nextInt(1000) * 60);
+            } else {
+                acmsmr.put(m, acmsmr.get(m) + rand.nextInt(36) * 60);
+            }
+
             s = acmsmr.get(m).toString();
         } else if (KMLAYOUT.get(data).get(k).contains("COUNT")) {
             s = String.valueOf(rand.nextInt(36) * 16 * 60 * 2);
@@ -140,12 +143,12 @@ public class CreateKMRecord {
         } else if (KMLAYOUT.get(data).get(k).contains("PLACE")) {
             s = "";
         }
-        
-        if(s.equals(""))
+
+        if (s.equals("")) {
             s = " ";
+        }
 
         //System.out.println(k.toLowerCase() + ":" + s);
-
         return s;
     }
 
