@@ -57,7 +57,7 @@ public class TestDataGenerator {
         //共同研究用データ生成
         //true = オリジナルデータサイズ
         //false = 小規模データサイズ
-        metagen(false);
+        metagen(true);
     }
 
     //共同研究用テストデータ生成
