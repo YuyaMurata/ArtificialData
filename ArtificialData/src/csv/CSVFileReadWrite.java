@@ -14,40 +14,38 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author ZZ17390
  */
 public class CSVFileReadWrite {
-    public static PrintWriter writer(String filename){
+
+    public static PrintWriter writer(String filename) {
         try {
-            return  new PrintWriter(new OutputStreamWriter(new FileOutputStream(filename)));
+            return new PrintWriter(new OutputStreamWriter(new FileOutputStream(filename), "UTF8"));
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
             System.exit(0);
+        } catch (UnsupportedEncodingException ex) {
+            ex.printStackTrace();
         }
-        
+
         return null;
     }
-    
-    public static PrintWriter addwriter(String filename){
+
+    public static BufferedReader reader(String filename) {
         try {
-            return  new PrintWriter(new OutputStreamWriter(new FileOutputStream(filename, true)));
+            return new BufferedReader(new InputStreamReader(new FileInputStream(filename), "UTF8"));
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
             System.exit(0);
+        } catch (UnsupportedEncodingException ex) {
+            ex.printStackTrace();
         }
-        
-        return null;
-    }
-    
-    public static BufferedReader reader(String filename){
-        try {
-            return new BufferedReader(new FileReader(filename));
-        } catch (FileNotFoundException ex) {
-        }
-        
+
         return null;
     }
 }

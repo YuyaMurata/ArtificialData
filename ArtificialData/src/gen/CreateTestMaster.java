@@ -149,7 +149,7 @@ public class CreateTestMaster {
 
     public static void create(Map<String, TreeMap<Double, String>> d, int n) {
 
-        try (PrintWriter pw = CSVFileReadWrite.writer(outpath + "test_master.csv")) {
+        try (PrintWriter pw = CSVFileReadWrite.writer(getFile())) {
             //header
             List<String> header = new ArrayList<>();
             header.add("No.");

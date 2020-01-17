@@ -37,26 +37,9 @@ public class MapToJSON {
         }
     }
 
-    public Map toMapSJIS(String filename) {
-        Map<String, String> index;
-        try (JsonReader reader = new JsonReader(new BufferedReader(new InputStreamReader(new FileInputStream(filename), "SJIS")))) {
-
-            Type type = new TypeToken<Map>() {
-            }.getType();
-
-            Gson gson = new Gson();
-            index = gson.fromJson(reader, type);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-
-        return index;
-    }
-
     public Map toMap(String filename) {
         Map<String, String> index;
-        try (JsonReader reader = new JsonReader(new BufferedReader(new InputStreamReader(new FileInputStream(filename))))) {
+        try (JsonReader reader = new JsonReader(new BufferedReader(new InputStreamReader(new FileInputStream(filename), "UTF8")))) {
 
             Type type = new TypeToken<Map>() {
             }.getType();
