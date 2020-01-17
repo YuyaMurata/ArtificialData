@@ -39,7 +39,7 @@ public class MapToJSON {
 
     public Map toMap(String filename) {
         Map<String, String> index;
-        try (JsonReader reader = new JsonReader(new BufferedReader(new InputStreamReader(new FileInputStream(filename), "UTF8")))) {
+        try (JsonReader reader = new JsonReader(new BufferedReader(new InputStreamReader(new FileInputStream(filename))))) {
 
             Type type = new TypeToken<Map>() {
             }.getType();

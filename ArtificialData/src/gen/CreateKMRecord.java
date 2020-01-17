@@ -144,10 +144,6 @@ public class CreateKMRecord {
             s = "";
         }
 
-        if (s.equals("")) {
-            s = " ";
-        }
-
         //System.out.println(k.toLowerCase() + ":" + s);
         return s;
     }

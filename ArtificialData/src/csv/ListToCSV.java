@@ -19,6 +19,25 @@ import java.util.stream.Collectors;
  * @author ZZ17390
  */
 public class ListToCSV {
+    public static List<String> toListSJIS(String csv){
+        List<String> list = new ArrayList<>();
+        try(BufferedReader br = CSVFileReadWrite.readerSJIS(csv)){
+            String line;
+            while((line = br.readLine()) != null){
+                //コメント除外
+                if(line.charAt(0) == '#')
+                    continue;
+                
+                list.add(line);
+            }
+            
+            return list;
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+    
     public static List<String> toList(String csv){
         List<String> list = new ArrayList<>();
         try(BufferedReader br = CSVFileReadWrite.reader(csv)){
@@ -39,7 +58,7 @@ public class ListToCSV {
     }
     
     public static Map<String, String> toMap(String csv, int k, int v){
-        List<String> l = toList(csv);
+        List<String> l = toListSJIS(csv);
         
         //ヘッダ削除
         l.remove(0);

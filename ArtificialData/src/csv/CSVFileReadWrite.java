@@ -38,7 +38,18 @@ public class CSVFileReadWrite {
 
     public static BufferedReader reader(String filename) {
         try {
-            return new BufferedReader(new InputStreamReader(new FileInputStream(filename), "UTF8"));
+            return new BufferedReader(new InputStreamReader(new FileInputStream(filename)));
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+            System.exit(0);
+        }
+
+        return null;
+    }
+    
+    public static BufferedReader readerSJIS(String filename) {
+        try {
+            return new BufferedReader(new InputStreamReader(new FileInputStream(filename), "SJIS"));
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
             System.exit(0);

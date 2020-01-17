@@ -33,11 +33,11 @@ public class CreateTestMaster {
     static Map<String, String> rule;
     static String path;
     static String outpath;
-    
-    public static String getFile(){
+
+    public static String getFile() {
         return outpath + "TEST_MASTER.csv";
     }
-    
+
     public static void generate(String rulefile, String metapath, String out, int n) {
         //パス設定
         rule = ListToCSV.toMap(rulefile, 2, 7);
@@ -46,14 +46,14 @@ public class CreateTestMaster {
 
         //集約データチェック
         Map<String, TreeMap<Double, String>> roullet = aggregate();
-        
+
         //マスタデータ生成
         create(roullet, n);
     }
 
     //ID処理されているデータの集約
     private static Map<String, TreeMap<Double, String>> aggregate() {
-        Map<String, Map<String, Double>> agg = new ConcurrentHashMap();
+        Map<String, Map<String, Double>> agg = new HashMap();
 
         //マスタに載せたいデータ項目
         rule.put("SYHK", "ID");
@@ -62,7 +62,7 @@ public class CreateTestMaster {
 
         MetaDataSet.setFiles(path);
         MetaDataSet.files.values().stream().forEach(f -> {
-            MetaDataDefine meta = new MetaDataDefine(f); 
+            MetaDataDefine meta = new MetaDataDefine(f);
             System.out.println(meta.name);
 
             Map<String, Map<String, Double>> data = meta.getData();
@@ -71,7 +71,14 @@ public class CreateTestMaster {
 
                 if (agg.get(field) == null) {
                     agg.put(field, new ConcurrentHashMap());
-                    agg.get(field).putAll(d.getValue());
+                    try {
+                        agg.get(field).putAll(d.getValue());
+                    } catch (Exception e) {
+                        System.err.println(d.getKey() + ":" + d.getValue());
+                        System.err.println(agg.get(field));
+                        //e.printStackTrace();
+                        //System.exit(0);
+                    }
                 } else {
                     d.getValue().entrySet().parallelStream().forEach(dv -> {
                         try {
@@ -81,9 +88,10 @@ public class CreateTestMaster {
                                 agg.get(field).put(dv.getKey(), agg.get(field).get(dv.getKey()) + dv.getValue());
                             }
                         } catch (Exception e) {
-                            System.err.println(dv);
+                            System.err.println(dv.getKey() + ":" + dv.getValue());
                             System.err.println(agg.get(field));
-                            System.exit(0);
+                            //e.printStackTrace();
+                            //System.exit(0);
                         }
                     });
                 }
@@ -91,7 +99,14 @@ public class CreateTestMaster {
         });
 
         //不都合があるため機番のみ空白削除
-        agg.get("kiban").remove("");
+        try {
+            System.out.println(agg.keySet());
+            agg.get("kiban").remove("");
+        } catch (Exception e) {
+            System.out.println(agg.get("kiban"));
+            e.printStackTrace();
+            System.exit(0);
+        }
 
         //累積比率に変換し並び替え
         Map<String, TreeMap<Double, String>> acm = new ConcurrentHashMap();
@@ -126,6 +141,7 @@ public class CreateTestMaster {
     }
 
     static Map<List<String>, String> dupCheck = new HashMap<>();
+
     private static Boolean duplicateCheck(List<String> rec, List<String> header) {
         //重複排除項目
         List<Integer> duplist = Arrays.asList(new Integer[]{
@@ -155,15 +171,14 @@ public class CreateTestMaster {
             header.add("No.");
             header.addAll(d.keySet());
             pw.println(String.join(",", header));
-            
+
             long i = 0L;
-            while(i < n){
+            while (i < n) {
                 //record
                 List<String> rec = new ArrayList<>();
                 rec.add(String.valueOf(i));
                 rec.addAll(d.values().stream()
                         .map(r -> r.ceilingEntry(Math.abs(rand.nextDouble())).getValue())
-                        .map(rv -> rv.equals("") ? " " : rv)
                         .collect(Collectors.toList()));
 
                 //重複しない場合のみ
