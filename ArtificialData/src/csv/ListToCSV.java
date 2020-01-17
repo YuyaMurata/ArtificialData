@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 public class ListToCSV {
     public static List<String> toList(String csv){
         List<String> list = new ArrayList<>();
-        try(BufferedReader br = CSVFileReadWrite.readerSJIS(csv)){
+        try(BufferedReader br = CSVFileReadWrite.reader(csv)){
             String line;
             while((line = br.readLine()) != null){
                 //コメント除外

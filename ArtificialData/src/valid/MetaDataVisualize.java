@@ -26,7 +26,7 @@ public class MetaDataVisualize {
             
             Map<String, String> layout = ListToCSV.toMap("resource\\kmresource\\layout\\"+f.replace("test", "Layout").replace(".json", ".csv"), 2, 1);
             
-            try(PrintWriter pw = CSVFileReadWrite.writerSJIS(f+".csv")){
+            try(PrintWriter pw = CSVFileReadWrite.writer(f+".csv")){
                 pw.println("公開キー,"+data.keySet().stream().collect(Collectors.joining(",")));
                 pw.println("非公開キー,"+data.keySet().stream().map(k -> layout.get(k.toUpperCase().split("\\.")[1])).collect(Collectors.joining(",")));
                 pw.println("データ匿名化の有無,");
