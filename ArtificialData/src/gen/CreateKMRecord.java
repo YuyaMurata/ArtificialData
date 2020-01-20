@@ -143,7 +143,12 @@ public class CreateKMRecord {
         } else if (KMLAYOUT.get(data).get(k).contains("PLACE")) {
             s = "";
         }
-
+        
+        //空白追加
+        /*if (s.equals("")) {
+            s = " ";
+        }*/
+        
         //System.out.println(k.toLowerCase() + ":" + s);
         return s;
     }

@@ -42,6 +42,7 @@ public class CreateRecord {
         List<String> rec = def.getData().keySet().stream()
                 .map(k -> TEST.extract(k, m) == null ? def.getData(k, rand.nextInt(def.getRange(k))) : TEST.extract(k, m))
                 .map(rd -> rd == null ? "" : rd)
+                //.map(rd -> rd.equals("") || rd.equals("null") ? " " : rd) //空白追加
                 .map(rd -> rd.equals("") || rd.equals("null") ? "" : rd)
                 .collect(Collectors.toList());
 
@@ -59,6 +60,7 @@ public class CreateRecord {
         List<String> rec = def.getData().keySet().stream()
                 .map(k -> TEST.extract(k, m) == null ? def.getData(k, rand.nextInt(def.getRange(k))) : TEST.extract(k, m))
                 .map(rd -> rd == null ? "" : rd)
+                //.map(rd -> rd.equals("") || rd.equals("null") ? " " : rd) //空白追加
                 .map(rd -> rd.equals("") || rd.equals("null") ? "" : rd)
                 .collect(Collectors.toList());
 

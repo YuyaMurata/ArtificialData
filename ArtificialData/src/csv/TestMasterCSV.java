@@ -38,7 +38,7 @@ public class TestMasterCSV {
         l.remove(0);
 
         //data
-        l.stream().map(s -> s.split(",")).forEach(s -> {
+        l.stream().map(s -> s.split(",", -1)).forEach(s -> {
             master.put(s[0], Arrays.asList(s));
         });
         
@@ -79,6 +79,7 @@ public class TestMasterCSV {
         } catch (Exception e) {
             System.err.println(i+":"+key);
             System.err.println(m.size()+":"+m);
+            e.printStackTrace();
             System.exit(0);
             return null;
         }

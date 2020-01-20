@@ -59,28 +59,30 @@ public class CreateTestMaster {
         rule.put("SYHK", "ID");
         rule.put("TYP", "ID");
         rule.put("NNY_YMD", "ID");
-
+        
+        
         MetaDataSet.setFiles(path);
+        
         MetaDataSet.files.values().stream().forEach(f -> {
             MetaDataDefine meta = new MetaDataDefine(f);
             System.out.println(meta.name);
 
             Map<String, Map<String, Double>> data = meta.getData();
-            data.entrySet().parallelStream().filter(d -> idfilter(d.getKey())).forEach(d -> {
+            data.entrySet().stream().filter(d -> idfilter(d.getKey())).forEach(d -> {
                 String field = d.getKey().split("\\.")[1];
 
                 if (agg.get(field) == null) {
-                    agg.put(field, new ConcurrentHashMap());
+                    agg.put(field, new HashMap());
                     try {
                         agg.get(field).putAll(d.getValue());
                     } catch (Exception e) {
                         System.err.println(d.getKey() + ":" + d.getValue());
-                        System.err.println(agg.get(field));
-                        //e.printStackTrace();
-                        //System.exit(0);
+                        System.err.println(field+":"+agg.keySet());
+                        e.printStackTrace();
+                        System.exit(0);
                     }
                 } else {
-                    d.getValue().entrySet().parallelStream().forEach(dv -> {
+                    d.getValue().entrySet().stream().forEach(dv -> {
                         try {
                             if (agg.get(field).get(dv.getKey()) == null) {
                                 agg.get(field).put(dv.getKey(), dv.getValue());
@@ -90,8 +92,8 @@ public class CreateTestMaster {
                         } catch (Exception e) {
                             System.err.println(dv.getKey() + ":" + dv.getValue());
                             System.err.println(agg.get(field));
-                            //e.printStackTrace();
-                            //System.exit(0);
+                            e.printStackTrace();
+                            System.exit(0);
                         }
                     });
                 }
@@ -179,6 +181,7 @@ public class CreateTestMaster {
                 rec.add(String.valueOf(i));
                 rec.addAll(d.values().stream()
                         .map(r -> r.ceilingEntry(Math.abs(rand.nextDouble())).getValue())
+                        //.map(rv -> rv.equals("") ? " " : rv) //空白追加
                         .collect(Collectors.toList()));
 
                 //重複しない場合のみ

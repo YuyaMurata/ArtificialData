@@ -39,10 +39,10 @@ public class TestDataGenerator {
     //データ生成用パス
     private static String RULE_FILE = "metaset\\データ項目匿名化ファイル.csv";
     private static String META_PATH = "metaset\\anonymous\\";
-    private static String OUTPATH = "data\\";
+    private static String OUTPATH = "F:\\data\\";
 
     public static void main(String[] args) {
-
+        System.out.println(System.getProperty("file.encoding"));
         //旧データ生成
         //システムテスト用 customer=100000 syaryo(N,機種)=(1000000, 676(MAX)) order=10000000 work=20000000 parts=30000000 sensor(GPS,SMR)=250000000
         //性能  testdata file=98.7GB  generate time=2h10m  json time= ?s  memory=? json file=?
@@ -57,7 +57,7 @@ public class TestDataGenerator {
         //共同研究用データ生成
         //true = オリジナルデータサイズ
         //false = 小規模データサイズ
-        metagen(false);
+        metagen(true);
     }
 
     //共同研究用テストデータ生成

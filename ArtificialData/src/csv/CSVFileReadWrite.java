@@ -25,7 +25,7 @@ public class CSVFileReadWrite {
 
     public static PrintWriter writer(String filename) {
         try {
-            return new PrintWriter(new OutputStreamWriter(new FileOutputStream(filename), "UTF8"));
+            return new PrintWriter(new OutputStreamWriter(new FileOutputStream(filename), "UTF-8"));
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
             System.exit(0);
